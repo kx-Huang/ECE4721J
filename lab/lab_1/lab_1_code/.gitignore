@@ -1,0 +1,5 @@
+target/classes/
+target/generated-sources/
+target/maven*
+target/surefire-reports/
+target/lab_1_code-1.0-SNAPSHOT.jar
