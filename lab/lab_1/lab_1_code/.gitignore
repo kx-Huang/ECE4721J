@@ -1,3 +1,7 @@
+# vscode enviroment
+.vscode/
+
+# build target
 target/classes/
 target/generated-sources/
 target/maven*
