@@ -67,12 +67,13 @@ public class Cinema {
                     }
                     // no seat available
                     if (bookSucceess == false)
-                    System.out.println(customerName + "," + movieName);
+                        System.out.println(customerName + "," + movieName);
                     continue;
                 }
                 // no movie matched
                 System.out.println(customerName + "," + movieName);
             }
+            scanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("Error: " + e.getMessage());
             System.exit(-1);

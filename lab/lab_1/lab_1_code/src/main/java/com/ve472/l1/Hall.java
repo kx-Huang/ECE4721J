@@ -138,6 +138,7 @@ public class Hall {
             int col = bestPos[1] + i;
             // set seat to unavailable
             seats.get(bestPos[0]).set(col, false);
+            // append col position for display
             colPos += "," + Integer.toString(col + 1);
         }
         System.out.println(
