@@ -19,7 +19,7 @@ public class Main {
             // print the help message
             if (cmd.hasOption("h")) {
                 HelpFormatter formatter = new HelpFormatter();
-                formatter.printHelp("myapp", options, true);
+                formatter.printHelp("cinema", options, false);
             }
             // get the value of the hall config directory
             String hallPath = cmd.getOptionValue("hall");
