@@ -1,5 +1,6 @@
-# vscode enviroment
+# env
 .vscode/
+.DS_Store
 
 # build target
 target/classes/
