@@ -1,6 +1,6 @@
-# ECE4721J/VE472 *Methods and Tools for Big Data* Coursework
+# ECE4721J *Methods and Tools for Big Data* Coursework
 
-Coursework for ECE4721J/VE472 *Methods and Tools for Big Data* @UM-SJTU Joint Institute
+Coursework for ECE4721J *Methods and Tools for Big Data* @UM-SJTU Joint Institute
 
 ## Basic Info ![](https://visitor-badge.glitch.me/badge?page_id=kx-Huang.ECE4721J&left_color=gray&right_color=blue)
 
