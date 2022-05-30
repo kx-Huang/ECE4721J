@@ -1,13 +1,11 @@
 #!/usr/bin/awk -f
-function getRandomId(){
-    return sprintf("%005d%005d",rand()*99999,rand()*99999)
-}
 
 BEGIN {
     # Config
-    ROW_NUM=200000
-    FIRST_INPUT="l2-names/firstnames.txt"
-    LAST_INPUT="l2-names/lastnames.txt"
+    ROW_NUM=100000
+    FIRST_INPUT="data/firstnames.txt"
+    LAST_INPUT="data/lastnames.txt"
+    ID_INPUT="data/id.txt"
     DELIM=","
     srand();
 
@@ -20,10 +18,15 @@ BEGIN {
     while(getline < LAST_INPUT){
         last[l++]=$0;
     }
-    
+    i=0;
+    while(getline < ID_INPUT){
+        id[i++]=$0;
+    }
+
     # Generate csv
     r=0;
     while(r++ < ROW_NUM){
-        printf "%s %s%s%s%s%d\n",first[int(rand()*f)],last[int(rand()*l)],DELIM,getRandomId(),DELIM,int(rand()*100);
+        num = rand()
+        printf "%s %s%s%s%s%d\n",first[int(num*f)],last[int(num*l)],DELIM,id[int(num*i)],DELIM,int(num*100);
     }
 }
