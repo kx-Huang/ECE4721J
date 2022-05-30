@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f
+#!/bin/bash
 # Reads grades.csv with name, studentID and grades
 # Returns the tab-separated pair: studentID<TAB>grade
 # Input:
