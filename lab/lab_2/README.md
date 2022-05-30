@@ -42,6 +42,8 @@ hdfs dfs -get <file_in_hdfs>
 hdfs dfs -rm -r -f output/ # need to empty the output directory everytime rerunning the code
 ```
 
+You can check via Utilities->Browse file system in `localhost:9870` to check the directory and files on the hdfs.
+
 ### Streaming
 
 - In your hadoop home directory, run streaming with package: `share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar` via the following command after you have created `dir_in_hdfs` for `inputdir` and `outputdir`.
