@@ -1,8 +1,8 @@
 #!/bin/bash
-# Reads grades.csv with name, studentID and grades
+# Reads STDIN with name, studentID and grades separated by newline
 # Returns the tab-separated pair: studentID<TAB>grade
 # Input:
-#    grades.csv: hadoop,0123456789,100
+#    STDIN: hadoop,0123456789,100
 # Output:
 #    STDOUT: 0123456789<TAB>100
 

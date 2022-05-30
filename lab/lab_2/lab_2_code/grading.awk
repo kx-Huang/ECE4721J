@@ -2,7 +2,7 @@
 
 BEGIN {
     # Config
-    ROW_NUM=100000
+    ROW_NUM=10000
     FIRST_INPUT="data/firstnames.txt"
     LAST_INPUT="data/lastnames.txt"
     ID_INPUT="data/id.txt"
@@ -27,6 +27,6 @@ BEGIN {
     r=0;
     while(r++ < ROW_NUM){
         num = rand()
-        printf "%s %s%s%s%s%d\n",first[int(num*f)],last[int(num*l)],DELIM,id[int(num*i)],DELIM,int(num*100);
+        printf "%s %s%s%s%s%d\n",first[int(num*f)],last[int(num*l)],DELIM,id[int(num*i)],DELIM,int(rand()*100);
     }
 }
