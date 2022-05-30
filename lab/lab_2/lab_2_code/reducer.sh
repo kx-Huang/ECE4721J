@@ -2,17 +2,8 @@
 # Reads pairs from the standard input. Each tab-separated pair is composed of a studentID and a list of grades
 # Returns the max grade for each student on the standard output.
 # Usage:
-#    STDIN: StudentID\tGrade1 Grade2 Grade3
-#    e.g.: 1234567890   238 473856 5636326 56583 -349 3503 0 -349
+#    STDIN: StudentID\tGrade1, StudentID\tGrade2, ...
 # Output:
-#    A single number as the max grade
-#    e.g.:  5636326
+#    StudentID MaxGrade
 
-IFS=$'\n'
-
-while read line
-do
-    echo $line | awk -F " " '{for(i=2;i<=NF;i++) {if($i>max) {max=$i}}} END {print max}'
-done
-
-unset IFS
+python reducer.py
