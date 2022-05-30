@@ -12,8 +12,7 @@ IFS=$'\n'
 
 while read line
 do
-    arr=($( echo "$line" | sed 's/.*\t//' ))
-    echo "${arr[*]}" | sort -nr | head -1
+    echo $line | awk -F " " '{for(i=2;i<=NF;i++) {if($i>max) {max=$i}}} END {print max}'
 done
 
 unset IFS
