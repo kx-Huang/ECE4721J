@@ -6,4 +6,4 @@
 # Output:
 #    STDOUT: 0123456789<TAB>100
 
-awk -F "," '{printf "%s\t%s\n", $2, $3}'
+awk -F, '{print $2"\t"$3}'

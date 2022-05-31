@@ -48,7 +48,7 @@ We first randomly 1000 students with  `generate.py`. Then we use `grading.sh ` a
 |      10000000      | 286.9 MB  |
 |     100000000      |  2.87 GB  |
 
-![File Generation](lab_2_code/benchmark/img/file.png){width=80%}
+![File Generation](img/file.png){width=80%}
 
 # 2. Performance on a single computer
 
@@ -67,12 +67,19 @@ The speed (total time in the unit of seconds) versus the size of the file is as 
 |      10000000      | 286.9 MB  |     55.917     |
 |     100000000      |  2.87 GB  |      534       |
 
-![Single Performance](lab_2_code/benchmark/img/single.png){width=80%}
+![Single Performance](img/single.png){width=80%}
 
 # 3. Performance on the group cluster
 
 
-# 4. Code
+# 4. Hadoop MapReduce
+
+\qquad The Apache Hadoop is a framework supporting the distributed processing of large data sets across clusters of computers, which takes advantage of the MapReduce programming model that processes and generates big data sets with distributed algorithm on a cluster. MapReduce mainly consists of:
+
+- Mapper: takes splitted input from the disk as `<key,value>` pairs, processes them, and produces another intermediate `<key,value>` pairs as output.
+- Reducer: takes `<key,value>` pairs with the same key, aggregates the values, and produces new useful `<key,value>` pairs as output.
+
+![Hadoop MapReduce](img/mapreduce.png){width=80%}
 
 ## a. Generate Raw Data
 
