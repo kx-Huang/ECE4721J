@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # coding:utf-8
 
 # Reads pairs from the standard input. Each tab-separated pair is composed of a studentID and a list of grades
