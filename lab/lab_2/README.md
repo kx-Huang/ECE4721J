@@ -1,4 +1,4 @@
-# VE472 Lab 2 Hadoop
+# ECE4721J Lab 2: Hadoop
 
 ## I. Hadoop
 The Apache™ Hadoop® project develops open-source software for reliable, scalable, distributed computing.
