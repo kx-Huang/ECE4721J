@@ -4,7 +4,7 @@
 - Path:  `root@hadoop-master:/home/s/lab2_benchmark`
 - Stucture:
 
-  ```
+  ```log
   /home/s/lab2_benchmark
           ├── benchmark.sh
           ├── input
