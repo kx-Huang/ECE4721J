@@ -1,4 +1,4 @@
-# Lab 2: Hadoop
+# Lab 2: Hadoop MapReduce
 
 ## 1. Generate Data
 
@@ -54,7 +54,7 @@ hadoop jar <HADOOP_HOME>/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar -inpu
 *Note*:
 
 - <MAPPER> and <REDUCER> can be local files, while <DFS_INPUT_DIR> and <DFS_OUTPUT_DIR> is in `hdfs`
-- `<DFS_OUTPUT_DIR>` needs to be emptyed everytime re-running the mapreduce task
+- `<DFS_OUTPUT_DIR>` needs to be emptyed everytime re-running the MapReduce task
 
 *Error Handling*:
 
