@@ -6,12 +6,7 @@
 data/
 
 # build target
-target/classes
-target/gen*
-target/maven*
-target/hw*
-target/original*
-target/test*
+target/
 
 # xml
 dependency-reduced-pom.xml
