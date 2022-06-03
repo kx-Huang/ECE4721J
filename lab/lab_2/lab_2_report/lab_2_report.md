@@ -78,7 +78,7 @@ The Apache Hadoop is a framework supporting the distributed processing of large 
 
 ![Hadoop MapReduce](img/mapreduce.png){width=70%}
 
-With Hadoop cluster set up, we have 1 master and 2 slave for mapreduce tasks. The speed (total time in the unit of seconds) versus the number of student and the size of the file is as follows,
+With Hadoop cluster set up, we have 1 master and 2 slave for MapReduce tasks. The speed (total time in the unit of seconds) versus the number of student and the size of the file is as follows,
 
 | Number of students | File Size | Total Time (s) |
 | :----------------: | :-------: | :------------: |
@@ -93,7 +93,7 @@ With Hadoop cluster set up, we have 1 master and 2 slave for mapreduce tasks. Th
 
 ![Benchmark](img/benchmark.png){width=72%}
 
-We can find that Hadoop mapreduce is much more efficient for big data.
+We can find that Hadoop MapReduce is much more efficient for big data.
 
 # 4. Hadoop MapReduce Configuration
 ## a. Generate Data
@@ -220,7 +220,9 @@ if "__main__" == __name__:
     reduce()
 ```
 
-## d. Mapreduce
+\newpage
+
+## d. Hadoop Cluster
 
 ### 1) HDFS
 
@@ -245,18 +247,21 @@ hadoop jar <HADOOP_HOME>/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar -inpu
 *Notes:*
 
 - <MAPPER> and <REDUCER> can be local files, while <DFS_INPUT_DIR> and <DFS_OUTPUT_DIR> is in `hdfs`
-- `<DFS_OUTPUT_DIR>` needs to be emptyed everytime re-running the mapreduce task
+- `<DFS_OUTPUT_DIR>` needs to be emptyed everytime re-running the MapReduce task
 
 *Error Handling:*
+
 - Check `<HADOOP_HOME>/logs` for detailed logs
 - `WARN org.apache.hadoop.streaming.PipeMapRed: java.io.IOException`
   - Check if `#!/usr/bin/env python` is included if you are using `python`
   - Check if shell scripts are granted permission to execute
   - Check if shell scripts handle the exception correctly
 
-## d. Benchmark
+\newpage
 
-### 1) Run Haddop Mapreduce Tasks
+## e. Benchmark
+
+### 1) Run Hadoop MapReduce Tasks
 
 - Path:  `root@hadoop-master:/home/s/lab2_benchmark`
 - Command
@@ -271,7 +276,7 @@ hadoop jar <HADOOP_HOME>/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar -inpu
 - Effect:
   1. copy the `csv` files in `input/` to `hdfs`
   2. For each file in `input/`:
-     - Run mapreduce tasks
+     - Run MapReduce tasks
      - Calculate time used in seconds
   3. Generate a log file `time.log` in `log/`
 
