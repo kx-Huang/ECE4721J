@@ -1,22 +1,18 @@
 # Lab 2: Hadoop
 
-## Generate Raw Data
+## Generate Data
 
-- Run: `.../data $ python generate.py`
+- run: `.../lab_2_code $ python3 generate.py <number of lines>`
+  - e.g. `python3 generate.py 100`
 - Python module: `names`, `random`
 - Input: None
-- Ouput: 3 text files
-  - `.../data/firstnames.txt`
-  - `.../data/lastnames.txt`
-  - `.../data/id.txt`
-
-## Generate `grades.csv`
-
-- run: `.../lab_2_code $ ./grading.sh`
+- output: create directory `data/` and generate `grades_100.csv`
+  - format: `<name>,<studentID>,<grade>`
+  - e.g. `Michael Huang,0123456789,90`
 
 ## Mapper
 
-- run: `.../lab_2_code $ ./mapper.sh < grades.csv`
+- run: `.../lab_2_code $ ./mapper.sh < data/grades_#.csv`
 - Usage: Reads `stdin` with name, studentID and grades separated by newline. Returns the tab-separated pair: `studentID<TAB>grade`
 - Input: `stdin` (e.g `Michael Huang,0123456789,100`)
 - Output: `stdout` (e.g `0123456789<TAB>10`)
