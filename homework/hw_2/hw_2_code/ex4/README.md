@@ -95,3 +95,7 @@ My current latest version: `1.11.0`
   - 10 csv files `grades_#.csv` in `small_generated/`
   - 10 csv files `grades_#.csv` in `small_extracted/`
 - Effect: No output if the extracted files and original files are the same.
+
+## 5. Run Build/run/diff Pipeline with `makefile`
+
+- Run: `$ make`
