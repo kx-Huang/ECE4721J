@@ -2,6 +2,8 @@
 
 ## 1. Generate Data
 
+Script `generate.py` generates `csv` file contains random names, studentsID and grades
+
 - Run: `$ python3 generate.py <number of lines>`
   - e.g. `python3 generate.py 100`
 - Python module: `names`, `random`
@@ -12,22 +14,27 @@
 
 ## 2. Mapper
 
-- Run: `$ ./mapper.sh < data/grades_#.csv`
-- Usage: Reads `stdin` with name, studentID and grades separated by newline. Returns the tab-separated pair: `studentID<TAB>grade`
+Mapper reads `stdin` with name, studentID & grade separated by newline, and returns the tab-separated pair: `studentID<TAB>grade`
+
+- Run: `$ ./mapper.sh`
 - Input: `stdin` (e.g `Michael Huang,0123456789,100`)
-- Output: `stdout` (e.g `0123456789<TAB>10`)
+- Output: `stdout` (e.g `0123456789<TAB>100`)
 - Test: Use input redirection to read from file `grades.csv`
 
 ## 3. Reducer
 
-- Run: `$ ./reducer.sh < data/reducer.in`
-- Usage: Reads pairs from the standard input. Each tab-separated pair is composed of a studentID and a list of grades. Returns the max grade for each student on the standard output.
-- Input: `stdin` (e.g. `0123456789<TAB>86 100 92`)
-- Output: ID and a single number as the max grade (e.g. `0123456789 100`)
+Reducer reads tab-separated pairs from the standard input, each of which is composed of a studentID and a grade, and returns the max grade for each student on the standard output.
+
+- Run: `$ ./reducer.sh`
+- Input: `stdin` (e.g. `0123456789<TAB>80 ... 0123456789<TAB>100`)
+- Output: `stdout` (e.g. `0123456789 100`)
 
 ## 4. Single Task
 
-- Run
+Single task cascades mapper and reducer with pipe.
+
+- Run: `$ ./mapper.sh < grades_100.csv | ./reducer`
+- Benchmark: use `time` command to calculate time elapsed
 
 ## 5. Hadoop Cluster
 
