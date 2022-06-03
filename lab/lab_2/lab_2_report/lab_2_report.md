@@ -98,6 +98,8 @@ We can find that Hadoop MapReduce is much more efficient for big data.
 # 4. Hadoop MapReduce Configuration
 ## a. Generate Data
 
+Script `generate.py` generates `csv` file contains random names, studentsID and grades.
+
 - Run: `$ python3 generate.py <number of lines>`
   - e.g. `python3 generate.py 100`
 - Python module: `names`, `random`
@@ -163,10 +165,11 @@ if "__main__" == __name__:
 
 ## b. Mapper
 
-- Run: `$ ./mapper.sh < data/grades_#.csv`
-- Usage: Reads `stdin` with name, studentID and grades separated by newline. Returns the tab-separated pair: `studentID<TAB>grade`
+Mapper reads `stdin` with name, studentID & grade separated by newline, and returns the tab-separated pair: `studentID<TAB>grade`
+
+- Run: `$ ./mapper.sh`
 - Input: `stdin` (e.g `Michael Huang,0123456789,100`)
-- Output: `stdout` (e.g `0123456789<TAB>10`)
+- Output: `stdout` (e.g `0123456789<TAB>100`)
 - Test: Use input redirection to read from file `grades.csv`
 
 ### Code for `mapper.sh`
@@ -176,27 +179,41 @@ if "__main__" == __name__:
 # Reads STDIN with name, studentID and grades separated by newline
 # Returns the tab-separated pair: studentID<TAB>grade
 # Input:
-#    STDIN: hadoop,0123456789,100
+#    STDIN: Michael Huang,0123456789,100
 # Output:
 #    STDOUT: 0123456789<TAB>100
 
 awk -F, '{print $2"\t"$3}'
+
 ```
 
 ## c. Reducer
 
-- run: `$ ./reducer.sh < data/reducer.in`
-- Usage: Reads pairs from the standard input. Each tab-separated pair is composed of a studentID and a list of grades. Returns the max grade for each student on the standard output.
-- Input: `stdin` (e.g. `0123456789<TAB>86 100 92`)
-- Output: ID and a single number as the max grade (e.g. `0123456789 100`)
+Reducer reads tab-separated pairs from the standard input, each of which is composed of a studentID and a grade, and returns the max grade for each student on the standard output.
+
+- Run: `$ ./reducer.sh`
+- Input: `stdin` (e.g. `0123456789<TAB>80 ... 0123456789<TAB>100`)
+- Output: `stdout` (e.g. `0123456789 100`)
 
 ### Code for `reducer.py`
 
 ```python
-#!/usr/bin/python
-#coding:utf-8
+#!/usr/bin/python3
+# coding:utf-8
+
+# Reads pairs from the standard input. Each tab-separated pair is composed of a studentID and a list of grades
+# Returns the max grade for each student on the standard output.
+#
+# Input:
+#    StudentID<TAB>Grade1
+#    StudentID<TAB>Grade2
+#    ...
+# Output:
+#    StudentID Max(Grade1, Grade2, ...)
+
 
 import sys
+
 
 def reduce():
 
@@ -218,11 +235,20 @@ def reduce():
 
 if "__main__" == __name__:
     reduce()
+
 ```
 
 \newpage
 
-## d. Hadoop Cluster
+
+## d. Single Task
+
+Single task cascades mapper and reducer with pipe.
+
+- Run: `$ ./mapper.sh < grades_100.csv | ./reducer`
+- Benchmark: use `time` command to calculate time elapsed
+
+## e. Hadoop Cluster
 
 ### 1) HDFS
 
@@ -259,7 +285,7 @@ hadoop jar <HADOOP_HOME>/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar -inpu
 
 \newpage
 
-## e. Benchmark
+## f. Benchmark
 
 ### 1) Run Hadoop MapReduce Tasks
 
