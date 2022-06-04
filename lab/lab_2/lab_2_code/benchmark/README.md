@@ -32,10 +32,10 @@
   $ ./benchmark.sh
   ```
 
-- Input: put `grades_#.csv` into `input/`
+- Input: put `grades_<NUM>.csv` into `input/`
 - Output: `/log/time.log` containing task time in seconds
 - Effect:
-  1. copy the `csv` files in `input/` to `hdfs`
+  1. copy the CSV files in `input/` to HDFS
   2. For each file in `input/`:
      - run mapreduce tasks
      - calculate time used in seconds
