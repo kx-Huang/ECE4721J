@@ -22,10 +22,10 @@
 mkdir -p output
 mkdir -p log
 
-# delete hdfs input/lab2
+# delete HDFS input/lab2
 hdfs dfs -rm -r -f input/lab2
 
-# copy input to hdfs
+# copy input to HDFS
 mv input/ lab2/
 hdfs dfs -put lab2/ input/
 mv lab2/ input/
