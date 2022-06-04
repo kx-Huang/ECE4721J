@@ -1,4 +1,4 @@
-# ECE4721J *Methods and Tools for Big Data* Coursework
+# ECE4721J: *Methods and Tools for Big Data* Coursework
 
 Coursework for ECE4721J *Methods and Tools for Big Data* @UM-SJTU Joint Institute
 
