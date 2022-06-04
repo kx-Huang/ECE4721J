@@ -101,12 +101,12 @@ Hadoop streaming is a utility that comes with the Hadoop distribution. The utili
 - Package: `share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar`
 - Useful args:
   - `-files`: can be your mapper and reducer files. Tell the framework to pack your executable files as a part of job submission.
-  - `-input`: input file or directory (hdfs)
-  - `-output`: output directory (hdfs)
+  - `-input`: input file or directory (HDFS)
+  - `-output`: output directory (HDFS)
   - `-mapper`: name of mapper file
   - `-reducer`: name of reducer file
 - Your mapper and reducer can be in any language you want.
-- You may want to copy your result from hdfs using `hadoop fs -get`.
+- You may want to copy your result from HDFS using `hadoop fs -get`.
 
 
 ## Trouble Shooting
