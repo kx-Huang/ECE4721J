@@ -203,7 +203,6 @@ Reducer reads tab-separated pairs from the standard input, each of which is comp
 
 # Reads pairs from the standard input. Each tab-separated pair is composed of a studentID and a list of grades
 # Returns the max grade for each student on the standard output.
-#
 # Input:
 #    StudentID<TAB>Grade1
 #    StudentID<TAB>Grade2
@@ -238,9 +237,6 @@ if "__main__" == __name__:
 
 ```
 
-\newpage
-
-
 ## d. Single Task
 
 Single task cascades mapper and reducer with pipe.
@@ -257,7 +253,7 @@ hdfs dfs -ls <dir_in_hdfs>
 hdfs dfs -mkdir <dir_in_hdfs>
 hdfs dfs -put <file_in_your_system> <dir_in_hdfs>
 hdfs dfs -get <file_in_hdfs>
-hdfs dfs -rm -r -f output/ # you need to empty the output directory everytime you want to rerun the code, you will see a message if rm is successful
+hdfs dfs -rm -r -f output
 ```
 
 You can check via Utilities->Browse file system in `localhost:9870` to check the directory and files on the hdfs.
@@ -282,8 +278,6 @@ hadoop jar <HADOOP_HOME>/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar -inpu
   - Check if `#!/usr/bin/env python` is included if you are using `python`
   - Check if shell scripts are granted permission to execute
   - Check if shell scripts handle the exception correctly
-
-\newpage
 
 ## f. Benchmark
 
