@@ -2,7 +2,7 @@
 
 ## 1. Generate Data
 
-Script `generate.py` generates `csv` file contains random names, studentsID and grades
+Script `generate.py` generates CSV file contains random names, studentsID and grades
 
 - Run: `$ python3 generate.py <number of lines>`
   - e.g. `python3 generate.py 100`
@@ -25,34 +25,34 @@ Mapper reads `stdin` with name, studentID & grade separated by newline, and retu
 
 Reducer reads tab-separated pairs from the standard input, each of which is composed of a studentID and a grade, and returns the max grade for each student on the standard output.
 
-- Run: `$ ./reducer.sh`
+- Run: `$ ./reducer.py`
 - Input: `stdin` (e.g. `0123456789<TAB>80 ... 0123456789<TAB>100`)
 - Output: `stdout` (e.g. `0123456789 100`)
 
 ## 4. Single Task
 
-Single task cascades mapper and reducer with pipe.
+Single task cascades mapper and reducer with pipes.
 
-- Run: `$ ./mapper.sh < grades_100.csv | ./reducer`
-- Benchmark: use `time` command to calculate time elapsed
+- Run: `$ cat data/grades_<NUM>.csv | ./mapper.sh | ./reducer.py`
+- Benchmark: use `time` command to calculate time elapsed for CSV files with `<NUM>` lines
 
 ## 5. Hadoop Cluster
 
-### a. HDFS
+### a. HDFS (Hadoop Distributed File System)
 
 ```bash
-hdfs dfs -ls <dir_in_hdfs>
-hdfs dfs -mkdir <dir_in_hdfs>
-hdfs dfs -put <file_in_your_system> <dir_in_hdfs>
-hdfs dfs -get <file_in_hdfs>
+hdfs dfs -ls <DFS_DIR>
+hdfs dfs -mkdir <DFS_DIR>
+hdfs dfs -put <LOCAL_DIR> <DFS_DIR>
+hdfs dfs -get <DFS_DIR>
 hdfs dfs -rm -r -f output
 ```
 
-You can check via Utilities->Browse file system in `localhost:9870` to check the directory and files on the hdfs.
+You can check via Utilities->Browse file system in `localhost:9870` to check the directory and files on the HDFS.
 
 ### b. Streaming
 
-In your hadoop home directory, run streaming with package: `share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar` via the following command after you have created directory in `hdfs` for `<DFS_INPUT_DIR>` and `<DFS_OUTPUT_DIR>`
+In your hadoop home directory, run streaming with package: `share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar` via the following command after you have created directory in HDFS for `<DFS_INPUT_DIR>` and `<DFS_OUTPUT_DIR>`
 
 ```bash
 hadoop jar <HADOOP_HOME>/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar -input <DFS_INPUT_DIR> -output <DFS_OUTPUT_DIR> -mapper <MAPPER> -reducer <REDUCER> -file <LOCAL_MAPPER_DIR>  -file <LOCAL_REDUCER_DIR>
@@ -60,7 +60,7 @@ hadoop jar <HADOOP_HOME>/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar -inpu
 
 *Note*:
 
-- <MAPPER> and <REDUCER> can be local files, while <DFS_INPUT_DIR> and <DFS_OUTPUT_DIR> is in `hdfs`
+- <MAPPER> and <REDUCER> can be local files, while <DFS_INPUT_DIR> and <DFS_OUTPUT_DIR> is in HDFS
 - `<DFS_OUTPUT_DIR>` needs to be emptyed everytime re-running the MapReduce task
 
 *Error Handling*:
