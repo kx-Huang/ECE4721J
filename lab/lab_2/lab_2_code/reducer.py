@@ -3,7 +3,6 @@
 
 # Reads pairs from the standard input. Each tab-separated pair is composed of a studentID and a list of grades
 # Returns the max grade for each student on the standard output.
-#
 # Input:
 #    StudentID<TAB>Grade1
 #    StudentID<TAB>Grade2
