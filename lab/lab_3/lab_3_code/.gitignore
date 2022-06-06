@@ -1,0 +1,8 @@
+# env
+.vscode/
+.DS_Store
+
+# data
+var/
+*.tsv
+*.out
