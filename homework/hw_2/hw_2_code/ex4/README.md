@@ -10,10 +10,27 @@ My current latest version: `1.11.0`
 
   ```xml
   <dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.avro/avro-maven-plugin -->
     <groupId>org.apache.avro</groupId>
     <artifactId>avro</artifactId>
     <version>1.11.0</version>
   </dependency>
+  <dependency>
+      <groupId>org.xerial.snappy</groupId>
+      <artifactId>snappy-java</artifactId>
+      <version>1.1.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.15</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.36</version>
+    </dependency>
+  </dependencies>
   ```
 
 2. Add Avro Maven plugin (for performing code generation):
@@ -22,27 +39,15 @@ My current latest version: `1.11.0`
   <plugin>
     <groupId>org.apache.avro</groupId>
     <artifactId>avro-maven-plugin</artifactId>
-    <version>1.10.2</version>
+    <version>1.11.0</version>
     <executions>
       <execution>
         <phase>generate-sources</phase>
         <goals>
           <goal>schema</goal>
         </goals>
-        <configuration>
-          <sourceDirectory>src/main/avro/</sourceDirectory>
-          <outputDirectory>src/main/java/</outputDirectory>
-        </configuration>
       </execution>
     </executions>
-  </plugin>
-  <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-compiler-plugin</artifactId>
-    <configuration>
-      <source>1.8</source>
-      <target>1.8</target>
-    </configuration>
   </plugin>
   ```
 
@@ -72,13 +77,13 @@ My current latest version: `1.11.0`
 
 ## 2. Compile `json` Schema
 
-- Compile: `$ java -jar target/avro-tools-1.11.0.jar compile schema json/schema.json src/main/java/com/ve472/h2`
-- Effect: auto-generated `AvroFile.java` by `Avro` in `src/main/java/com/ve472/h2/avro/`
+- Compile: `$ java -jar target/avro-tools-1.11.0.jar compile schema json/schema.json src/main/java`
+- Effect: auto-generated `AvroFile.java` by `Avro` in `src/main/java/avro/`
 
 ## 3. Compile and Run `Java` Source Code
 
 - Compile: `$ mvn compile`
-- Run: `$ mvn -q exec:java -Dexec.mainClass="Main"`
+- Run: `$ java -jar target/ex4-1.0-SNAPSHOT.jar`
 - Notes: All files are readed from or generated to folder `data/`
 - Effect:
   1. Compact small files:
@@ -96,6 +101,6 @@ My current latest version: `1.11.0`
   - 10 csv files `grades_#.csv` in `small_extracted/`
 - Effect: No output if the extracted files and original files are the same.
 
-## 5. Run Build/run/diff Pipeline with `makefile`
+## 5. Run Clean/Build/Run/Diff Pipeline with `makefile`
 
 - Run: `$ make`
