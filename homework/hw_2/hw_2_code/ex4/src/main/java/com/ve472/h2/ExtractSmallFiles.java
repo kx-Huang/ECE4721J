@@ -1,4 +1,7 @@
+package com.ve472.h2;
+
 import avro.AvroFile;
+
 import org.apache.avro.file.DataFileReader;
 import org.apache.avro.io.DatumReader;
 import org.apache.avro.specific.SpecificDatumReader;

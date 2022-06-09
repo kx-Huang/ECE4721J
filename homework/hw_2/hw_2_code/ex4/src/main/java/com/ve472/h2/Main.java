@@ -1,3 +1,5 @@
+package com.ve472.h2;
+
 public class Main {
     public static void main(String[] args) {
         String schema = "json/schema.json";

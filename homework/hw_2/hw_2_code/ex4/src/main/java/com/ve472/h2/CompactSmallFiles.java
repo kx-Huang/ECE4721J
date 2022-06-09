@@ -1,3 +1,5 @@
+package com.ve472.h2;
+
 import avro.AvroFile;
 
 import org.apache.avro.Schema;
@@ -8,7 +10,6 @@ import org.apache.avro.specific.SpecificDatumWriter;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
