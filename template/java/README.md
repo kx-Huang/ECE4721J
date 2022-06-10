@@ -1,4 +1,4 @@
-# Homework 0: ex.0
+# Template: Sample Java Project
 
 ## Usage
 
@@ -16,3 +16,14 @@ Print "Hello World!" in terminal
 - Run: `$ java -jar target/ex4-1.0-SNAPSHOT.jar`
 - Compile and run with `makefile`: `$ make`
 - Clean target files: `$ make clean`
+
+## Remark: How to use this template project
+
+1. Copy and paste the folder into your working directory
+2. Change folder `src/main/java/com/ve472/h0` name if wanted, e.g. `src/main/java/com/ve472/my_program_name`
+3. Update `pom.xml`:
+    - Update `groupID`: e.g. `<groupId>com.ve472.my_program_name</groupId>`
+    - Update `artifactId`: e.g. `<artifactId>my_project_name</artifactId>`
+    - Update `mainClass`: e.g. `<mainClass>com.ve472.my_program_name.Main</mainClass>`
+    - Add your dependency and plugin
+4. Update `makefile`: e.g. `java -jar target/my_program_name-1.0-SNAPSHOT.jar`
