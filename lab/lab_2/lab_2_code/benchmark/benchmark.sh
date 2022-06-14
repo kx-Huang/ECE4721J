@@ -39,11 +39,10 @@ do
     # remove output folder in HDFS
     hdfs dfs -rm -r -f output/
 
-    # start counting time
-    start=$SECONDS
+    # run mapreduce task
+    start=$SECONDS # start counting time
     hadoop jar /home/s/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar -input input/lab2/grades_$NUM.csv -output output -mapper /src/mapper.sh -reducer "python reducer.py" -file /src/mapper.sh  -file /src/reducer.py
-    end=$SECONDS
-    # end counting time
+    end=$SECONDS # end counting time
 
     # calculate time elapsed and save to log
     duration=$(($end - $start))
