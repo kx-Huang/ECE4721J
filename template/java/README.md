@@ -25,5 +25,15 @@ Print "Hello World!" in terminal
     - Update `groupID`: e.g. `<groupId>com.ve472.my_program_name</groupId>`
     - Update `artifactId`: e.g. `<artifactId>my_project_name</artifactId>`
     - Update `mainClass`: e.g. `<mainClass>com.ve472.my_program_name.Main</mainClass>`
-    - Add your dependency and plugin
+    - Add your dependency and plugin:
+      - Search in [MVN Repository](https://mvnrepository.com)
+      - e.g.
+        ```xml
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>3.3.3</version>
+        </dependency>
+        ```
+
 4. Update `makefile`: e.g. `java -jar target/my_program_name-1.0-SNAPSHOT.jar`
