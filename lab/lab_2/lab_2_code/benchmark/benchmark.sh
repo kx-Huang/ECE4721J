@@ -30,25 +30,30 @@ mv input/ lab2/
 hdfs dfs -put lab2/ input/
 mv lab2/ input/
 
+# delete last log
 rm -f log/time.log
 
+# run mapreduce for each input file
 for ((NUM=1000;NUM<=100000000;))
 do
+    # remove output folder in HDFS
     hdfs dfs -rm -r -f output/
-    cd /home/s/hadoop
 
+    # start counting time
     start=$SECONDS
-
-    hadoop jar share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar -input input/lab2/grades_$NUM.csv -output output -mapper /src/mapper.sh -reducer "python reducer.py" -file /src/mapper.sh  -file /src/reducer.py
-
+    hadoop jar /home/s/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar -input input/lab2/grades_$NUM.csv -output output -mapper /src/mapper.sh -reducer "python reducer.py" -file /src/mapper.sh  -file /src/reducer.py
     end=$SECONDS
+    # end counting time
 
+    # calculate time elapsed and save to log
+    duration=$(($end - $start))
+    echo $NUM: $duration >> log/time.log
+
+    # copy output from HDFS to local
     cd /home/s/lab2_benchmark
     hdfs dfs -get output/part-00000
     mv part-00000 output/$NUM.out
 
-    duration=$(($end - $start))
-    echo $NUM: $duration >> log/time.log
-
+    # next file size
     ((NUM=$NUM*10))
 done
