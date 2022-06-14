@@ -32,16 +32,17 @@
   $ ./benchmark.sh
   ```
 
-- Input: put `grades_<NUM>.csv` into `input/`
-- Output: `/log/time.log` containing task time in seconds
+- Remark: make sure mapper and reducer source files are put to HDFS in `/src/`, e.g. `hdfs dfs -put ../mapper.sh /src/`
+- Input: put `grades_<NUM>.csv` into local folder `input/`
+- Output: `/log/time.log` containing task time in seconds in local folder `output`
 - Effect:
-  1. copy the CSV files in `input/` to HDFS
-  2. For each file in `input/`:
+  1. copy the CSV files in local folder `input/` to HDFS
+  2. For each file in local folder `input/`:
      - run mapreduce tasks
      - calculate time used in seconds
-  3. Generate a log file `time.log` in `log/`
+  3. Generate a log file `time.log` in local folder `log/`
 
 ## Scatter and fitting Plot
 
 - Run: `$ python3 plot.py`
-- Ouput: plots saved to `img/`
+- Ouput: plots saved to local folder `img/`
