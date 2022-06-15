@@ -4,6 +4,8 @@
 
 # data
 data/
+input/
+output/
 
 # build target
 target/
@@ -13,3 +15,6 @@ dependency-reduced-pom.xml
 
 # zip
 *.zip
+
+# log
+log/
