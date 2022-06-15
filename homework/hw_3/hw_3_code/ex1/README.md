@@ -47,6 +47,7 @@ Get runtime with 6 files with different line numbers: 1000 to 100000000
 
 - Command:
   ```bash
+  cd benchmark
   chomd +x benchmark.sh
   ./benchmark.sh
   ```
