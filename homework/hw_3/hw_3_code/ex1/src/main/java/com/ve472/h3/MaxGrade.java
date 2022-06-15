@@ -25,6 +25,10 @@ public class MaxGrade {
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             StringTokenizer itr = new StringTokenizer(value.toString(), ",");
 
+            // invalid line
+            if (itr.countTokens() != 3)
+                return;
+
             // skip the student name
             itr.nextToken();
 
