@@ -1,7 +1,6 @@
 package com.ve472.h3;
 
 import java.io.IOException;
-import java.util.StringTokenizer;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -23,20 +22,14 @@ public class MaxGrade {
         private IntWritable grade = new IntWritable(0);
 
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-            StringTokenizer itr = new StringTokenizer(value.toString(), ",");
-
-            // invalid line
-            if (itr.countTokens() != 3)
+            String[] entry = value.toString().split(",");
+            // skip ill-formed line
+            if (entry.length != 3)
                 return;
-
-            // skip the student name
-            itr.nextToken();
-
-            // get student ID and grade
-            studentID.set(itr.nextToken());
-            grade.set(Integer.parseInt(itr.nextToken()));
-
-            // generate the output studentID-grade pair.
+            // get studentID and grade
+            studentID.set(entry[1]);
+            grade.set(Integer.parseInt(entry[2]));
+            // submit output key-value pair
             context.write(studentID, grade);
         }
     }
@@ -49,13 +42,11 @@ public class MaxGrade {
 
         public void reduce(Text key, Iterable<IntWritable> values,
                 Context context) throws IOException, InterruptedException {
-
             // get the max grade
             int maxGrade = 0;
             while (values.iterator().hasNext())
                 maxGrade = Math.max(maxGrade, values.iterator().next().get());
             grade = new IntWritable(maxGrade);
-
             // generate the output studentID-maxGrade pair.
             context.write(key, grade);
         }
