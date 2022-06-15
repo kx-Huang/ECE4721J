@@ -4,6 +4,8 @@
 
 Run MapReduce task with `Java` and `Apache Hadoop`
 
+- Source File: `src/main/java/com/ve472/h3/MaxGrade.java`
+
 - Remark: remove input and output folder on HDFS before running Mapreduce task
 
   ```bash
