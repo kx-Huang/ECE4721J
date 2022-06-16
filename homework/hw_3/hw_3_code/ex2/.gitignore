@@ -1,0 +1,15 @@
+# env
+.vscode/
+.DS_Store
+
+# data
+data/
+
+# build target
+target/
+
+# xml
+dependency-reduced-pom.xml
+
+# zip
+*.zip
