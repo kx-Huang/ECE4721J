@@ -9,13 +9,14 @@ My current latest version: `1.11.0`
 1. Add dependency:
 
   ```xml
-  <dependency>
+  <dependencies>
+    <dependency>
     <!-- https://mvnrepository.com/artifact/org.apache.avro/avro-maven-plugin -->
     <groupId>org.apache.avro</groupId>
     <artifactId>avro</artifactId>
     <version>1.11.0</version>
-  </dependency>
-  <dependency>
+    </dependency>
+    <dependency>
       <groupId>org.xerial.snappy</groupId>
       <artifactId>snappy-java</artifactId>
       <version>1.1.2.1</version>
@@ -33,7 +34,7 @@ My current latest version: `1.11.0`
   </dependencies>
   ```
 
-2. Add Avro Maven plugin (for performing code generation):
+2. Add Avro Maven plugin (for `Java` code generation):
 
   ```xml
   <plugin>
