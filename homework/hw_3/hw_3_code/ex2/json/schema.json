@@ -1,0 +1,19 @@
+{
+    "namespace": "avro",
+    "type": "record",
+    "name": "AvroFile",
+    "fields": [
+        {
+            "name": "filename",
+            "type": "string"
+        },
+        {
+            "name": "filecontent",
+            "type": "bytes"
+        },
+        {
+            "name": "checksum",
+            "type": "string"
+        }
+    ]
+}
