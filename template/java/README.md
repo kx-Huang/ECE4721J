@@ -12,6 +12,7 @@ Print "Hello World!" in terminal
 
 ## Compile and Run
 
+- Remark: please install `Java`, `Maven`, `Makefile` first
 - Compile: `$ mvn compile`
 - Run: `$ java -jar target/ex4-1.0-SNAPSHOT.jar`
 - Compile and run with `makefile`: `$ make`
