@@ -70,7 +70,8 @@ public class CompactSmallFiles {
                 AvroFile avroFile = AvroFile.newBuilder()
                                             .setFilename(file.getName())
                                             .setFilecontent(byteBuffer)
-                                            .setChecksum(sha).build();
+                                            .setChecksum(sha)
+                                            .build();
 
                 // append Avro file using Avro data file writer
                 dataFileWriter.append(avroFile);
