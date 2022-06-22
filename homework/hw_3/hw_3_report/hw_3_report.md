@@ -84,7 +84,7 @@ Please Refer to `hw_3_code/ex1/README.md`
 
 ::: warning
 
-Please Refer to `hw_3_code/ex1/README.md`
+Please refer to `hw_3_code/ex2/README.md`
 
 :::
 
@@ -107,14 +107,14 @@ Please Refer to `hw_3_code/ex1/README.md`
   - If any of the bits at these positions is 0, the element is definitely not in the set; If it were, then all the bits would have been set to 1 when it was inserted.
   - If all are 1, then either the element is in the set, or the bits have by chance been set to 1 during the insertion of other elements, resulting in a false positive. In a simple Bloom filter, there is no way to distinguish between the two cases, but more advanced techniques can address this problem.
 
-![Bloom Filter](img/bloom-filter.png){width=75%}
+![Bloom Filter](img/bloom-filter.png){width=62%}
 
 :::
 
-## 2. Using the BloomFilter class write a mapper which creates a Bloom filter.
+## 2/3. implementation
 
-::: info
+::: warning
 
-
+Please refer to `hw_3_code/ex3/README.md`
 
 :::
