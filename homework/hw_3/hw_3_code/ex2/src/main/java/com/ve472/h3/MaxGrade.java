@@ -38,18 +38,10 @@ public class MaxGrade extends Configured implements Tool {
     private Text studentID = new Text();
     private IntWritable grade = new IntWritable(0);
 
-    // decode avro file raw data
-    private String decodeByte(ByteBuffer byteBuffer) throws CharacterCodingException {
-      Charset charset = StandardCharsets.UTF_8;
-      CharsetDecoder charsetDecoder = charset.newDecoder();
-      CharBuffer charBuffer = charsetDecoder.decode(byteBuffer.asReadOnlyBuffer());
-      return charBuffer.toString();
-    }
-
     @Override
     public void map(AvroKey<AvroFile> key, NullWritable value, Context context)
         throws IOException, InterruptedException {
-      String raw = decodeByte(key.datum().getFilecontent());
+      String raw = new String(key.datum().getFilecontent().array());
       String[] records = raw.split("\n");
       // split each line by comma
       for (String row : records) {
