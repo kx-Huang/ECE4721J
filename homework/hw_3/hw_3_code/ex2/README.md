@@ -1,4 +1,6 @@
-# Homework 2: Ex.4
+# Homework 3: Ex.2
+
+With Hadoop MapReduce, find the max grade for each student and serialize studentID-maxGrade pairs into an Avro file
 
 ## 0. Install `Hadoop` and `Avro` related packages
 
@@ -90,7 +92,7 @@ The `large.avro` can be found in `homework/hw_2/hw_2_code/ex4/data/large.avro`
 
 - Remarks: clean HDFS output folder: e.g. `$ hdfs dfs -rm -r -f /kexuan/h3e2/output`
 - Run: `$ hadoop jar target/ex2-1.0-SNAPSHOT.jar /kexuan/h3e2/input /kexuan/h3e2/output`
-- Output: the generated `Avro` file `part-00000.avro` can be found in HDFS folder `/kexuan/h3e2/output/`
+- Output: the generated `Avro` file `part-r-00000.avro` can be found in HDFS folder `/kexuan/h3e2/output/`
 
 ## 5. Run pipeline with `makefile`
 
