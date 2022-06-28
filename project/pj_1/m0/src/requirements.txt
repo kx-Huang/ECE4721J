@@ -1,0 +1,4 @@
+glob2
+numpy
+tables
+PyGreSQL
