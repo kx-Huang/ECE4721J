@@ -325,14 +325,18 @@ df <- read.csv("/data/variation.csv")
 Plot the results:
 
 ```r
-ggplot(data = df, aes(x = factor(month), y = temperature/10, color = continent)) + geom_line(aes(group = continent)) + geom_point() + xlab("Month") + ylab("Average Temperature (°C)")
+ggplot(data = df, aes(x = factor(month), y = temperature / 10, color = continent)) +
+    geom_line(aes(group = continent)) +
+    geom_point() +
+    xlab("Month") +
+    ylab("Average Temperature (°C)")
 ```
 
 \ 
 
 Output:
 
-![Temperature Variation](../hw_4_code/variation.svg)
+![Temperature Variation](../hw_4_code/img/variation.svg)
 
 :::
 
@@ -343,13 +347,16 @@ Output:
 Plot the results:
 
 ```r
-ggplot(df, aes(continent, temperature/10, fill = continent)) + geom_bar(position = "dodge", stat = "summary", fun = "mean") + xlab("Continent") + ylab("Average Temperature (°C)")
+ggplot(df, aes(continent, temperature / 10, fill = continent)) +
+    geom_bar(position = "dodge", stat = "summary", fun = "mean") +
+    xlab("Continent") +
+    ylab("Average Temperature (°C)")
 ```
 
 \ 
 
 Output:
 
-![Average Temperature](../hw_4_code/average.svg)
+![Average Temperature](../hw_4_code/img/average.svg)
 
 :::
