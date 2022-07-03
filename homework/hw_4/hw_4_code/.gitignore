@@ -1,0 +1,10 @@
+# env
+.vscode/
+.DS_Store
+
+# data
+2017.csv
+country_continent.csv
+meta.csv
+*.txt
+*.zip
