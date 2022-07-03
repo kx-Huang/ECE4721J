@@ -80,6 +80,8 @@ ORDER BY CAST(weather.w_value AS INTEGER) DESC
 LIMIT 5;
 ```
 
+\ 
+
 Output:
 
 ```log
@@ -115,6 +117,8 @@ WHERE weather.w_type = 'TMIN'
 ORDER BY CAST(weather.w_value AS INTEGER)
 LIMIT 5;
 ```
+
+\ 
 
 Output:
 
@@ -153,6 +157,8 @@ ORDER BY CAST(weather.w_value AS INTEGER) DESC
 LIMIT 5;
 ```
 
+\ 
+
 Output:
 
 ```log
@@ -172,17 +178,18 @@ Output:
 
 # Ex.2 Holidays!
 
-## 1. Define what is “perfect weather” according to you. Express it in terms of precipitations, average temperature, and daily temperature amplitude.
+## 1. Define what is “perfect weather” according to you.
 
 ::: info
 
-Perfect weather for me:
+Perfect weather options for me:
 
 1. Average temperature: 15°C ~ 25°C
 2. Maximum temperature: 30°C
 3. Minimum temperature: 10°C
 4. Precipitation: 10% ~ 20%
-5. Date: July and Auguest
+
+And I wanna go on July and Auguest!
 
 :::
 
@@ -193,48 +200,51 @@ Perfect weather for me:
 SQL:
 
 ```sql
-SELECT DISTINCT(country.c_name) AS country c,
+SELECT DISTINCT(country.c_name) AS country,
     country.c_continent AS continent
 FROM station
     INNER JOIN country ON SUBSTR(station.s_id, 1, 2) = country.c_fips
     INNER JOIN weather ON station.s_id = weather.w_station
 WHERE (
-        weather.w_date > 20170701 AND weather.w_date < 20170831
+        weather.w_date > 20170701
+        AND weather.w_date < 20170831
         AND (
-            weather.w_type = 'TAVG'
-            AND CAST(weather.w_value AS FLOAT) > 150
-            AND CAST(weather.w_value AS FLOAT) < 300
-        )
-        OR (
-            weather.w_type = 'TMAX'
-            AND CAST(weather.w_value AS FLOAT) < 30
-        )
-        OR (
-            weather.w_type = 'TIN'
-            AND CAST(weather.w_value AS FLOAT) > 10
-        )
-        OR (
-            weather.w_type = 'PRCP'
-            AND CAST(weather.w_value AS FLOAT) > 10
-            AND CAST(weather.w_value AS FLOAT) < 20
+            (
+                weather.w_type = 'TAVG'
+                AND CAST(weather.w_value AS FLOAT) > 150
+                AND CAST(weather.w_value AS FLOAT) < 300
+            )
+            OR (
+                weather.w_type = 'TMAX'
+                AND CAST(weather.w_value AS FLOAT) < 30
+            )
+            OR (
+                weather.w_type = 'TIN'
+                AND CAST(weather.w_value AS FLOAT) > 10
+            )
+            OR (
+                weather.w_type = 'PRCP'
+                AND CAST(weather.w_value AS FLOAT) > 10
+                AND CAST(weather.w_value AS FLOAT) < 20
+            )
         )
     )
-LIMIT 5;
+LIMIT 3;
 ```
+
+\ 
 
 Output:
 
 ```log
-+-----------+-----------+
-|  country  | continent |
-+-----------+-----------+
-| Belize    | NA        |
-| Fiji      | OC        |
-| Greece    | EU        |
-| India     | AS        |
-| Indonesia | AS        |
-+-----------+-----------+
-5 rows selected (4.472 seconds)
++---------+-----------+
+| country | continent |
++---------+-----------+
+| Belize  | NA        |
+| Fiji    | OC        |
+| Japan   | AS        |
++---------+-----------+
+3 rows selected (3.743 seconds)
 ```
 
 \ 
@@ -245,3 +255,101 @@ Fiji looks good to me!
 
 # Ex.3 Data visualisation
 
+## 1. Plot the temperature variation for each continent.
+
+::: info
+
+SQL:
+
+```sql
+CREATE TABLE dfs.tmp.variation AS
+SELECT country.c_continent AS continent,
+    SUBSTR(weather.w_date, 5, 2) AS month,
+    AVG(CAST(weather.w_value AS FLOAT)) AS temperature
+FROM weather
+    INNER JOIN country
+        ON SUBSTR(weather.w_station, 1, 2) = country.c_fips
+GROUP BY country.c_continent, month
+ORDER BY country.c_continent, month;
+```
+
+\ 
+
+Output: a CSV file under `/tmp/variation/0_0_0.csv` in the following format:
+
+```csv
+continent,month,temperature
+AF,01,197.2585854968666
+AF,02,208.32279406108162
+AF,03,219.8021733168792
+AF,04,221.49289368959637
+AF,05,222.44915687276443
+AF,06,216.14217875115176
+AF,07,213.0046727330218
+AF,08,211.13295474100843
+AF,09,218.6969151670951
+AF,10,217.42438489819006
+AF,11,205.95837657524092
+AF,12,198.06032209791206
+AN,01,-13.24591977869986
+AN,02,-34.87149606299213
+AN,03,-64.83542788749251
+AN,04,-86.39857227840571
+AN,05,-83.21605117766792
+AN,06,-113.84666666666666
+AN,07,-114.73870682019486
+AN,08,-124.0599938781757
+AN,09,-111.12093435836783
+AN,10,-72.07099012543368
+AN,11,-37.66158958737192
+AN,12,-13.127147766323024
+AS,01,83.21173870897132
+AS,02,94.07081743554168
+AS,03,124.55971918876755
+...
+```
+
+:::
+
+::: info
+
+Read the CSV data into `RStudio` and load the package `ggplot` for plotting the results:
+
+```r
+require(ggplot2)
+df <- read.csv("/data/variation.csv")
+```
+
+\ 
+
+Plot the results:
+
+```r
+ggplot(data = df, aes(x = factor(month), y = temperature/10, color = continent)) + geom_line(aes(group = continent)) + geom_point() + xlab("Month") + ylab("Average Temperature (°C)")
+```
+
+\ 
+
+Output:
+
+![Temperature Variation](../hw_4_code/variation.svg)
+
+:::
+
+## 2. Plot the average temperature for each continent.
+
+::: info
+
+Plot the results:
+
+```r
+ggplot(df, aes(continent, temperature/10, fill = continent)) + geom_bar(position = "dodge", stat = "summary", fun = "mean") + xlab("Continent") + ylab("Average Temperature (°C)")
+```
+
+\ 
+
+Output:
+
+![Average Temperature](../hw_4_code/average.svg)
+
+:::
