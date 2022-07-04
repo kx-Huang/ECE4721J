@@ -30,12 +30,20 @@ def error():
     return f"{bcolors.FAIL}[Error]{bcolors.ENDC}"
 
 
+def warning():
+    return f"{bcolors.WARNING}[Warn]{bcolors.ENDC}"
+
+
 def red(string):
     return f"{bcolors.FAIL}%s{bcolors.ENDC}" % string
 
 
 def blue(string):
     return f"{bcolors.OKCYAN}%s{bcolors.ENDC}" % string
+
+
+def orange(string):
+    return f"{bcolors.WARNING}%s{bcolors.ENDC}" % string
 
 
 def get_time():
@@ -63,11 +71,16 @@ def parser():
         print(get_time(), info(), "hdf5 input path:", blue(args.hdf5))
         print(get_time(), info(), "Avro output path:", blue(args.avro))
 
-    # check if files exist
+    # check if input files exist
     if os.path.exists(args.schema) and os.path.exists(args.hdf5):
         print(get_time(), info(), "Avro schema file and hdf5 file exist")
     else:
         print(get_time(), error(), "Avro schema file or hdf5 file don't exist")
+
+    # check if output file exist
+    if os.path.exists(args.avro):
+        print(get_time(), warning(),
+              "Avro output file {} already exists".format(orange(args.avro)))
 
     return [args.schema, args.hdf5, args.avro]
 
