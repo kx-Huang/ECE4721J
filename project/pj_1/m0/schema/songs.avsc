@@ -1,0 +1,19 @@
+{
+  "namespace": "song.avro",
+  "type": "record",
+  "name": "Song",
+  "fields": [
+    { "name": "artist_hotttnesss", "type": ["float", "null"] },
+    { "name": "artist_id", "type": ["string", "null"] },
+    { "name": "artist_name", "type": ["string", "null"] },
+    { "name": "duration", "type": ["float", "null"] },
+    { "name": "energy", "type": ["float", "null"] },
+    { "name": "release", "type": ["string", "null"] },
+    { "name": "song_hotttnesss", "type": ["float", "null"] },
+    { "name": "song_id", "type": "string" },
+    { "name": "tempo", "type": ["float", "null"] },
+    { "name": "title", "type": ["string", "null"] },
+    { "name": "track_id", "type": ["string", "null"] },
+    { "name": "year", "type": ["int", "null"] }
+  ]
+}
