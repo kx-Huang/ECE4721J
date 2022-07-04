@@ -14,10 +14,11 @@ Team members:
 - Kexuan Huang
 - Qinhang Wu
 
-## Milestone 0: Compact and Extract
+## Milestone 0: Compact and Convert
 
-1. Compact small `hdf5` Avro files into larger ones
-2. Read `hdf5` Avro files and extract the information
+1. Compact small `hdf5` files into larger ones
+2. Read `hdf5` file and extract the information
+3. Convert `hdf5` file to `Avro` file with `Apache Avro™`
 
 ## Milestone 1: Database Queries
 
