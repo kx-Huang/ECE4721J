@@ -29,6 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
+from tqdm import tqdm
 import numpy as np
 # code relies on pytables, see http://www.pytables.org
 import tables
@@ -258,7 +259,7 @@ def fill_hdf5_aggregate_file(h5, h5_filenames, summaryfile=False):
     # counter
     counter = 0
     # iterate over filenames
-    for h5idx, h5filename in enumerate(h5_filenames):
+    for h5idx, h5filename in enumerate(tqdm(h5_filenames)):
         # open h5 file
         h5tocopy = open_h5_file_read(h5filename)
         # get number of songs in new file
