@@ -1,4 +1,4 @@
-# Project 1 Milestone 1: Database Queries
+# Project 1 Milestone 1: Drill Database Query
 
 Query [Million Song Dataset (MSD)](http://millionsongdataset.com) with `Drill`:
 
