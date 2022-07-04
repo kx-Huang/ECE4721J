@@ -3,4 +3,5 @@
 .DS_Store
 
 # data
-data/
+MillionSongSubset/
+*.tar.gz
