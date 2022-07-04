@@ -33,6 +33,7 @@ import tables
 
 MAXSTRLEN = 1024
 
+
 class SongMetaData(tables.IsDescription):
     """
     Class to hold the metadata of one song
@@ -59,11 +60,11 @@ class SongMetaData(tables.IsDescription):
     idx_similar_artists = tables.IntCol()
     idx_artist_terms = tables.IntCol()
     # TO ADD
-    
+
     # song mbid
     # album mbid
 
-    # url    
+    # url
     # preview url, 7digital, release_image
 
 
@@ -103,7 +104,8 @@ class SongAnalysis(tables.IsDescription):
     idx_bars_confidence = tables.IntCol()
     idx_tatums_start = tables.IntCol()
     idx_tatums_confidence = tables.IntCol()
-    
+
+
 class SongMusicBrainz(tables.IsDescription):
     """
     Class to hold information coming from

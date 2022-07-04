@@ -1,7 +1,8 @@
 import os
 import glob
 
-def get_all_files(basedir,ext='.h5') :
+
+def get_all_files(basedir, ext='.h5'):
     """
     From a root directory, go through all subdirectories
     and find all files with the given extension.
@@ -9,7 +10,7 @@ def get_all_files(basedir,ext='.h5') :
     """
     allfiles = []
     for root, dirs, files in os.walk(basedir):
-        files = glob.glob(os.path.join(root,'*'+ext))
-        for f in files :
-            allfiles.append( os.path.abspath(f) )
+        files = glob.glob(os.path.join(root, '*'+ext))
+        for f in files:
+            allfiles.append(os.path.abspath(f))
     return allfiles

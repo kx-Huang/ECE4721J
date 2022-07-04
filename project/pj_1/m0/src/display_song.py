@@ -29,7 +29,8 @@ def die_with_usage():
     print('T. Bertin-Mahieux (2010) tb2332@columbia.edu')
     print('to quickly display all we know about a song')
     print('usage:')
-    print('   python display_song.py [FLAGS] <HDF5 file> <OPT: song idx> <OPT: getter>')
+    print(
+        '   python display_song.py [FLAGS] <HDF5 file> <OPT: song idx> <OPT: getter>')
     print('example:')
     print('   python display_song.py mysong.h5 0 danceability')
     print('INPUTS')
@@ -72,12 +73,12 @@ if __name__ == '__main__':
 
     # sanity check
     if not os.path.isfile(hdf5path):
-        print('ERROR: file',hdf5path,'does not exist.')
+        print('ERROR: file', hdf5path, 'does not exist.')
         sys.exit(0)
     h5 = hdf5_getters.open_h5_file_read(hdf5path)
     numSongs = hdf5_getters.get_num_songs(h5)
     if songidx >= numSongs:
-        print('ERROR: file contains only',numSongs)
+        print('ERROR: file contains only', numSongs)
         h5.close()
         sys.exit(0)
 
@@ -90,7 +91,7 @@ if __name__ == '__main__':
         if onegetter[:4] != 'get_':
             onegetter = 'get_' + onegetter
         if not hasattr(hdf5_getters, onegetter):
-            print('ERROR: getter requested:',onegetter,'does not exist.')
+            print('ERROR: getter requested:', onegetter, 'does not exist.')
             h5.close()
             sys.exit(0)
         getters = [onegetter]
@@ -98,7 +99,7 @@ if __name__ == '__main__':
     # print them
     for getter in getters:
         try:
-            res = hdf5_getters.__getattribute__(getter)(h5,songidx)
+            res = hdf5_getters.__getattribute__(getter)(h5, songidx)
         except AttributeError as e:
             if summary:
                 continue
@@ -106,10 +107,10 @@ if __name__ == '__main__':
                 print(e)
                 print('forgot -summary flag? specified wrong getter?')
         if res.__class__.__name__ == 'ndarray':
-            print(getter[4:]+": shape =",res.shape)
+            print(getter[4:]+": shape =", res.shape)
         else:
-            print(getter[4:]+":",res)
+            print(getter[4:]+":", res)
 
     # done
-    print('DONE, showed song',songidx,'/',numSongs-1,'in file:',hdf5path)
+    print('DONE, showed song', songidx, '/', numSongs-1, 'in file:', hdf5path)
     h5.close()
