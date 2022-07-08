@@ -17,7 +17,7 @@ Creates an aggregate file from all song `hdf5` files in a given directory
 - Usage: `$ python3 create_aggregate_file.py <H5 DIR> <OUTPUT.h5>`
 - Input: a directory contains `hdf5` song files
 - Output: an aggregate `hdf5` song file
-- Example: `$ python3 src/create_aggregate_file.py ../MillionSongSubset/A/A/A/ data/compact.h5`
+- Example: `$ python3 src/create_aggregate_file.py data/single/ data/compact.h5`
 - Remark: Remove the existing file having the same name as the output file before running the `Python` script
 
 ## 2. Read `hdf5` files and extract the information
