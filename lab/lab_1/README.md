@@ -1,27 +1,27 @@
-# ECE4721J Lab 1: `Java` Programming
+# ECE4721J Lab 1: Java Programming
 
 Goals:
-- Write and use packages in `Java`
-- File input and output in `Java`
-- Object-oriented programming in `Java`
+- Write and use packages in Java
+- File input and output in Java
+- Object-oriented programming in Java
 
-## 0. `Java` Environment Setup
+## 0. Java Environment Setup
 
-### `MacOS`
+### MacOS
 
-#### Download from `Oracle` website
+#### Download from Oracle website
 
-Download `Oracle JDK` from `https://www.oracle.com/technetwork/java/javase/downloads/index.html` and run the installer.
+Download Oracle JDK from `https://www.oracle.com/technetwork/java/javase/downloads/index.html` and run the installer.
 
-#### Download with [`Homebrew` package manager](https://brew.sh)
+#### Download with [Homebrew package manager](https://brew.sh)
 
 ```bash
 $ brew install openjdk
 ```
 
-### `Linux`
+### Linux
 
-#### `Debian` and derived distribution (e.g. `Ubuntu`, `Linux Mint`)
+#### Debian and derived distribution (e.g. Ubuntu, Linux Mint)
 
 ```bash
 $ apt-get update
@@ -31,9 +31,9 @@ $ apt-get install oracle-java<X>-installer
 ```
 - Replace `<repository>` with a third-party repository
 - Replace `<X>` with the version number
-- Third-party repositories can be found at `https://launchpad.net/`, e.g. `Java 8`: `ppa:webupd8team/java`, or `Java 12`: `ppa:linuxuprising/java`.
+- Third-party repositories can be found at `https://launchpad.net/`, e.g. Java 8: `ppa:webupd8team/java`, or Java 12: `ppa:linuxuprising/java`.
 
-#### `Arch Linux` and derived distribution (e.g. `Manjaro`)
+#### Arch Linux and derived distribution (e.g. Manjaro)
 
 1. Install AUR helper tool `yay`
 
@@ -51,9 +51,9 @@ $ apt-get install oracle-java<X>-installer
    $ yay jdk
    ```
 
-## 1. `Java` Project Initialization
+## 1. Java Project Initialization
 
-Please refer to [`template/java`](https://github.com/kx-Huang/ECE4721J/tree/master/template/java), which is a template for all `Java` programs in this course
+Please refer to [`template/java`](https://github.com/kx-Huang/ECE4721J/tree/master/template/java), which is a template for all Java programs in this course
 
 - Project structure:
 

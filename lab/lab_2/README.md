@@ -1,8 +1,8 @@
-# ECE4721J Lab 2: `Hadoop`
+# ECE4721J Lab 2: Hadoop
 
 Goals:
-- Install `Hadoop`
-- Setup a `Hadoop` cluster
+- Install Hadoop
+- Setup a Hadoop cluster
 - Run a simple test program
 
 ## I. Hadoop
@@ -28,73 +28,109 @@ Three modes:
 
 
 ### Standalone and Pseudo-distributed
-- `Standalone` mode is mainly used for debugging where you don’t really use HDFS. You can use input and output both as a local file system in standalone mode. You also don’t need to do any custom configuration in the files `mapred-site.xml`, `core-site.xml`, `hdfs-site.xml`.
-- `Pseudo-distributed` mode is also known as a single-node cluster where both NameNode and DataNode will reside on the same machine. A separate JVM is spawned for every Hadoop component. May need to change `mapred-site.xml`, `core-site.xml`, `hdfs-site.xml`.
 
+- Standalone mode:
+
+  mainly used for debugging where you don’t really use HDFS. You can use input and output both as a local file system in standalone mode. You also don’t need to do any custom configuration in the files `mapred-site.xml`, `core-site.xml`, `hdfs-site.xml`.
+
+- Pseudo-distributed mode:
+
+  Also known as a single-node cluster where both NameNode and DataNode will reside on the same machine. A separate JVM is spawned for every Hadoop component. May need to change `mapred-site.xml`, `core-site.xml`, `hdfs-site.xml`.
 
 ### Cluster
-Note: sorry that some of the links below are in Chinese
-- Official document: https://hadoop.apache.org/docs/r3.2.2/hadoop-project-dist/hadoop-common/ClusterSetup.html
--  Obtain your ip address: `ifconfig`
--  Enable ssh: You may need to allow ssh in your linux firewall. Useful link: https://linuxize.com/post/how-to-enable-ssh-on-ubuntu-18-04/. If you are using vitural machine, you may find the following helpful:
+
+*Note: sorry that some of the links below are in Chinese*
+
+- Official document: `https://hadoop.apache.org/docs/r3.2.2/hadoop-project-dist/hadoop-common/ClusterSetup.html`
+
+- Obtain your ip address: `ifconfig`
+
+- Enable `ssh`: You may need to allow ssh in your linux firewall.
+
+  Useful link: `https://linuxize.com/post/how-to-enable-ssh-on-ubuntu-18-04/`.
+
+- If you are using vitural machine, you may find the following helpful:
+
    - Vmware:
+
       - Bridge: Set network to bridge mode. Then it directly shares the WLAN network with host machine.
-      - NAT: https://blog.csdn.net/Zereao/article/details/. Cons: may need to shutdown your firewall in host computer.
+
+      - NAT: `https://blog.csdn.net/Zereao/article/details/`.
+        Cons: may need to shutdown your firewall in host computer.
+
     - Vitrual box:
-      - https://dev.to/awwsmm/setting-up-an-ubuntu-vm-on-windows-server-2g23
-      - https://medium.com/@jootorres_11979/how-to-set-up-a-hadoop-3-2-1-multi-node-cluster-on-ubuntu-18-04-2-nodes-567ca44a3b12
 
-    Use the following to check if the connection is OK
-    ```sh
-    ping <host_ip>
-    ssh <user_name>@<host_ip>
-    ```
+      1. `https://dev.to/awwsmm/setting-up-an-ubuntu-vm-on-windows-server-2g23`
+      2. `https://medium.com/@jootorres_11979/how-to-set-up-a-hadoop-3-2-1-multi-node-cluster-on-ubuntu-18-04-2-nodes-567ca44a3b12`
+
+    - Use the following to check if the connection is OK
+
+      ```bash
+      $ ping <host_ip>
+      $ ssh <user_name>@<host_ip>
+      ```
+
 - Build cluster ubuntu:
-  - https://www.tutorialspoint.com/hadoop/hadoop_multi_node_cluster.html
-  - https://www.linode.com/docs/guides/how-to-install-and-set-up-hadoop-cluster/
-  - https://www.cnblogs.com/warehouse/p/10676140.html
-  - Very useful link (hadoop 3.2.1 on Ubuntu): https://medium.com/@jootorres_11979/how-to-set-up-a-hadoop-3-2-1-multi-node-cluster-on-ubuntu-18-04-2-nodes-567ca44a3b12
-  - Note: some parameters in newer versions are different from older versions.
-  - HDFS monitor example (1 master / 1 slave):
-  ![](https://raw.githubusercontent.com/xiejinglei/links/master/new-datanode-fixed.JPG)
 
-- Tip: You may need to start a datanode / nodemanager manually in master (refer to offical docs):
-  ```sh
-  hdfs --daemon start datanode
-  yarn --daemon start nodemanager
+  1. `https://www.tutorialspoint.com/hadoop/hadoop_multi_node_cluster.html`
+  2. `https://www.linode.com/docs/guides/how-to-install-and-set-up-hadoop-cluster/`
+  3. `https://www.cnblogs.com/warehouse/p/10676140.html`
+  4. Very useful link (hadoop 3.2.1 on Ubuntu): `https://medium.com/@jootorres_11979/how-to-set-up-a-hadoop-3-2-1-multi-node-cluster-on-ubuntu-18-04-2-nodes-567ca44a3b12`
+
+  *Note: some parameters in newer versions are different from older versions.*
+
+  HDFS monitor example (1 master / 1 slave):
+
+    ![](https://raw.githubusercontent.com/xiejinglei/links/master/new-datanode-fixed.JPG)
+
+#### Tips
+
+- You may need to start a datanode / nodemanager manually in master (refer to offical docs):
+
+  ```bash
+  $ hdfs --daemon start datanode
+  $ yarn --daemon start nodemanager
   ```
 
-- Tip: When you are finished with the jobs, remember to stop hdfs and yarn
-  ```sh
-  ./sbin/start-dfs.sh
-  ./sbin/stop-yarn.sh
+- When you are finished with the jobs, remember to stop hdfs and yarn
+
+  ```bash
+  $ ./sbin/start-dfs.sh
+  $ ./sbin/stop-yarn.sh
   ```
+
   or more simply
-  ```sh
-  ./sbin/stop-all.sh
+
+  ```bash
+  $ ./sbin/stop-all.sh
   ```
-  If you started something manually, then you may have to stop it manually. Eg:
-  ```sh
-  hdfs --daemon stop datanode
-  yarn --daemon stop nodemanager
+
+  If you started something manually, then you may have to stop it manually, e.g:
+
+  ```bash
+  $ hdfs --daemon stop datanode
+  $ yarn --daemon stop nodemanager
   ```
 
 ## II. HDFS
+
 Useful commands:
 
 ```bash
-hdfs dfs -ls <dir_in_hdfs>
-hdfs dfs -mkdir <dir_in_hdfs>
-hdfs dfs -put <file_in_your_system> <dir_in_hdfs>
-hdfs dfs -get <file_in_hdfs>
+$ hdfs dfs -ls <dir_in_hdfs>
+$ hdfs dfs -mkdir <dir_in_hdfs>
+$ hdfs dfs -put <file_in_your_system> <dir_in_hdfs>
+$ hdfs dfs -get <file_in_hdfs>
 ```
 
 ## III. MapReduce
+
 A MapReduce program is composed of a `map` procedure, which performs filtering and sorting, and a `reduce` method, which performs a summary operation. Example: Ex.2.
 
 Example test command:
-```sh
-cat grade.csv | ./mapper.sh | ./reducer.sh
+
+```bash
+$ cat grade.csv | ./mapper.sh | ./reducer.sh
 ```
 
 ![avatar](https://raw.githubusercontent.com/xiejinglei/links/master/mr.JPG)
@@ -119,17 +155,20 @@ Go to `logs/` to view possible error.
 1. Datanode cannot connect to master at port 9000. Keeps retrying connection.
 
    After starting HDFS, use
-   ```sh
-   netstat -tpnl
+
+   ```bash
+   $ netstat -tpnl
    ```
+
    to check port listening status. If port 9000 is on but still cannot be connected, the following command
 
-   ```sh
-   ufw allow 9000
+   ```bash
+   $ ufw allow 9000
    ```
+
    may slove the issue. Also check `/etc/hosts` to see if the configuration for `hadoop-master` is correct. Use LAN IP instead of localhost IP.
 
-
 ## Switch from cluster mode to pseudo-distributed
+
 1. Change hdfs/yarn xml files
 2. Edit `etc/hadoop/workers`, delete `hadoop-slave1` and so on

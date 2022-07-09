@@ -1,33 +1,33 @@
-# ECE4721J Lab 4: `Spark` and `Drill`
+# ECE4721J Lab 4: Spark and Drill
 
 Deploy **a cluster over all computers in your group**, instead of a pseudo-distributed one (multi-nodes on one computer).
 
 Goals:
-- Install `Drill` and `Spark`
-- Run `Drill` and `Spark` on a `Hadoop` cluster
-- Optionally connect `R` with `Drill` and `Spark`
+- Install Drill and Spark
+- Run Drill and Spark on a Hadoop cluster
+- Optionally connect R with Drill and Spark
 
-## `Spark`
+## Spark
 
-[`Apache Spark™`](https://spark.apache.org) is a fast and general-purpose cluster computing system. It provides high-level APIs in `Java`, `Scala`, `Python` and `R`, and an optimized engine that supports general execution graphs. It also supports a rich set of higher-level tools including `Spark SQL` for `SQL` and structured data processing, `MLlib` for machine learning, `GraphX` for graph processing, and `Spark` Streaming.
+[`Apache Spark™`](https://spark.apache.org) is a fast and general-purpose cluster computing system. It provides high-level APIs in `Java`, `Scala`, `Python` and `R`, and an optimized engine that supports general execution graphs. It also supports a rich set of higher-level tools including `Spark SQL` for SQL and structured data processing, `MLlib` for machine learning, `GraphX` for graph processing, and Spark Streaming.
 
-### 0. Install `Spark`
+### 0. Install Spark
 
-`Spark` offical website: `http://spark.apache.org/downloads.html`
+Spark offical website: `http://spark.apache.org/downloads.html`
 
-Since we have already installed `Hadoop`, we can install "Spark with user provided Apache Hadoop". For example, [`spark-2.4.3-bin-without-hadoop.tgz`](https://spark.apache.org/docs/2.4.3/)
+Since we have already installed Hadoop, we can install "Spark with user provided Apache Hadoop". For example, [`spark-2.4.3-bin-without-hadoop.tgz`](https://spark.apache.org/docs/2.4.3/)
 
-`Spark` can run both by itself, or over several existing cluster managers. It currently provides several options for deployment:
+Spark can run both by itself, or over several existing cluster managers. It currently provides several options for deployment:
 
 - Standalone Deploy Mode (simplest way to deploy on a private cluster)
-- [`Apache Mesos`](https://mesos.apache.org)
-- [`Apache Hadoop YARN`](https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html)
-- [`Kubernetes`](https://kubernetes.io)
+- [Apache Mesos](https://mesos.apache.org)
+- [Apache Hadoop YARN](https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html)
+- [Kubernetes](https://kubernetes.io)
 
-### 1. General steps for spark on `YARN`:
+### 1. General steps for spark on YARN:
 
--  Find the `YARN` Master node (i.e. which runs the Resource Manager). The following steps are to be performed on the master node only.
--  Download the `Spark` tgz package and extract it somewhere.
+-  Find the Yarn Master node (i.e. which runs the Resource Manager). The following steps are to be performed on the master node only.
+-  Download the Spark tgz package and extract it somewhere.
 -  Configure Hadoop Classpath: `https://spark.apache.org/docs/2.4.3/hadoop-provided.html`
 -  Define these environment variables:
 
@@ -66,17 +66,17 @@ Since we have already installed `Hadoop`, we can install "Spark with user provid
 	user: xiejinglei
     ```
 
-- When running on `YARN`, 2 modes exist :
+- When running on Yarn, 2 modes exist :
 
     1. client:
-        Runs the Driver on the client which submits the `Spark` job. The driver runs in the client process, and the application master is only used for requesting resources from `YARN`.
+        Runs the Driver on the client which submits the Spark job. The driver runs in the client process, and the application master is only used for requesting resources from Yarn.
 
     2. cluster:
-        Runs the Driver on a slave node. The `Spark` driver runs inside an application master process which is managed by `YARN` on the cluster, and the client can go away after initiating the application.
+        Runs the Driver on a slave node. The Spark driver runs inside an application master process which is managed by Yarn on the cluster, and the client can go away after initiating the application.
 
-### 2. `Spark shell`
+### 2. Spark shell
 
-Start `Spark shell` with the following command:
+Start Spark shell with the following command:
 
 ```bash
 $ TERM=xterm-color spark-shell
@@ -108,13 +108,13 @@ You may also try pyspark shell:
 $ pyspark
 ```
 
-### 3. `RDD`
+### 3. RDD
 
-Every `Spark` application consists of a driver program that runs the user’s main function and executes various parallel operations on a cluster. The main abstraction `Spark` provides is a `resilient distributed dataset (RDD)`, which is a collection of elements partitioned across the nodes of the cluster that can be operated on in parallel.
+Every Spark application consists of a driver program that runs the user’s main function and executes various parallel operations on a cluster. The main abstraction Spark provides is a `resilient distributed dataset (RDD)`, which is a collection of elements partitioned across the nodes of the cluster that can be operated on in parallel.
 
-`RDDs` are created by starting with a file in the `HDFS` (or any other Hadoop-supported file system), or an existing Scala collection in the driver program, and transforming it. Users may also ask `Spark` to persist an `RDD` in memory.
+RDDs are created by starting with a file in the HDFS (or any other Hadoop-supported file system), or an existing Scala collection in the driver program, and transforming it. Users may also ask Spark to persist an `RDD` in memory.
 
-`RDD` can be manipulated using `Spark shell`, `SparkR`, `PySpark`, `Scala` and `Java` APIs, etc.
+RDD can be manipulated using `Spark shell`, `SparkR`, `PySpark`, `Scala` and `Java` APIs, etc.
 
 You can check [RDD Programming Guide](https://spark.apache.org/docs/2.4.3/rdd-programming-guide.html) for more details.
 
@@ -140,13 +140,13 @@ You can check [RDD Programming Guide](https://spark.apache.org/docs/2.4.3/rdd-pr
 >>> avg = total / distData.distinct().count()
 ```
 
-## `Drill`
+## Drill
 
-`Drill` is an Apache open-source `SQL query engine` for Big Data exploration. `Drill` is designed from the ground up to support high-performance analysis on the semi-structured and rapidly evolving data coming from modern Big Data applications, while still providing the familiarity and ecosystem of `ANSI SQL`, the industry-standard query language.
+Drill is an Apache open-source SQL query engine for Big Data exploration. Drill is designed from the ground up to support high-performance analysis on the semi-structured and rapidly evolving data coming from modern Big Data applications, while still providing the familiarity and ecosystem of `ANSI SQL`, the industry-standard query language.
 
-You can check the [official tuturial](https://drill.apache.org/docs/installing-drill-on-the-cluster/) for installing `Drill` on the `Hadoop` cluster (with `Zookeeper`)
+You can check the [official tuturial](https://drill.apache.org/docs/installing-drill-on-the-cluster/) for installing Drill on the Hadoop cluster (with Zookeeper)
 
-### `Drill` SQL Examples
+### Drill SQL Examples
 
 ```sql
 apache drill> select columns[0] as name, columns[1] as id, columns[2] as grade from dfs.`/data/grades.csv` limit 2;
@@ -187,4 +187,4 @@ apache drill> select * from (select columns[0] as name, columns[1] as id, column
 +----------+------------+-------+
 ```
 
-`Drill` can also deal with data in [`Avro`](https://avro.apache.org) format, [`Parquet`](https://parquet.apache.org) format, etc. with a faster speed.
+Drill can also deal with data in [Avro](https://avro.apache.org) format, [Parquet](https://parquet.apache.org) format, etc. with a faster speed.
