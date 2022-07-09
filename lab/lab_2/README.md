@@ -83,7 +83,7 @@ Three modes:
 
     ![](https://raw.githubusercontent.com/xiejinglei/links/master/new-datanode-fixed.JPG)
 
-#### Tips
+**Tips:**
 
 - You may need to start a datanode / nodemanager manually in master (refer to offical docs):
 
@@ -105,7 +105,7 @@ Three modes:
   $ ./sbin/stop-all.sh
   ```
 
-  If you started something manually, then you may have to stop it manually, e.g:
+- If you started something manually, then you may have to stop it manually, e.g:
 
   ```bash
   $ hdfs --daemon stop datanode
@@ -125,9 +125,9 @@ $ hdfs dfs -get <file_in_hdfs>
 
 ## III. MapReduce
 
-A MapReduce program is composed of a `map` procedure, which performs filtering and sorting, and a `reduce` method, which performs a summary operation. Example: Ex.2.
+A MapReduce program is composed of a `map` procedure, which performs filtering and sorting, and a `reduce` method, which performs a summary operation.
 
-Example test command:
+Example test command for ex2:
 
 ```bash
 $ cat grade.csv | ./mapper.sh | ./reducer.sh
