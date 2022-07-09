@@ -1,7 +1,12 @@
-# ECE4721J Lab 2: Hadoop
+# ECE4721J Lab 2: `Hadoop`
+
+Goals:
+- Install `Hadoop`
+- Setup a `Hadoop` cluster
+- Run a simple test program
 
 ## I. Hadoop
-The Apache™ Hadoop® project develops open-source software for reliable, scalable, distributed computing.
+The `Apache™ Hadoop®` project develops open-source software for reliable, scalable, distributed computing.
 
 - Distributed processing of large data sets across clusters of computers
 - Sale up from single servers to thousands of machines, each offering local computation and storage
