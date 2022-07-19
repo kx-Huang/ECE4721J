@@ -232,8 +232,6 @@ WHERE (
 LIMIT 3;
 ```
 
-\ 
-
 Output:
 
 ```log
