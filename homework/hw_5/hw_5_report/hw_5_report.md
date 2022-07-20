@@ -248,6 +248,8 @@ $$
 \end{array}\right .
 $$
 
+\newpage
+
 # Ex.3 PCA in Spark
 
 ::: warning
@@ -261,7 +263,9 @@ Please refer to `ex3.py`
 ::: info
 
 PCA:
-- Provides the best “perspective” that emphasises similarities and dif- ferences in the data
+
+- Provides the best “perspective” that emphasises similarities and differences in the data
+
 - This new perspective combines the original “characteristics” in order to best summarize the data
 
 As a result, PCA can help Krystor quickly targeting the columns x (sensors) which are most related to the last columns y (hourly electric consumption)
