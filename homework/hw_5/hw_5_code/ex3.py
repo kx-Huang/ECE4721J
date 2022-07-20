@@ -23,7 +23,6 @@ def linear_fit(sensor):
 
 
 if __name__ == '__main__':
-
     for csv in "sensors1.csv", "sensors2.csv":
         print(" ---------- {} ----------".format(csv))
         sensor = np.loadtxt(open(csv, "rb"), delimiter=',')
