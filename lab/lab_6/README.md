@@ -24,3 +24,5 @@ Run Cholesky Decomposition algorithm with input from file
   ```
 
 - Benchmark: compare results with numpy method `numpy.linalg.cholesk` as reference, and we can see that they are the same, which verifies that our implementation is correct.
+
+- Submit to Spark: `$ spark-submit cholesky.py `
