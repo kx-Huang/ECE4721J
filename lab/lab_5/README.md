@@ -1,4 +1,4 @@
-# VE472 Lab 5: Large cluster
+# VE472 Lab 5: Larger cluster
 
 Goals:
 - Scale up a cluster
