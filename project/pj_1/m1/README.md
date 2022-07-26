@@ -14,11 +14,11 @@ Query [Million Song Dataset (MSD)](http://millionsongdataset.com) with `Drill`:
     ```sql
     -- Age of the oldest songs
     SELECT 2022 - MAX(Year)
-    FROM hdfs.`/pj_1/m0/output.avro`;
+    FROM hdfs.`/pj/m0/output.avro`;
 
     -- Age of the youngest songs
     SELECT 2022 - MIN(Year)
-    FROM hdfs.`/pj_1/m0/output.avro`
+    FROM hdfs.`/pj/m0/output.avro`
     WHERE YEAR > 0;
     ```
 
@@ -51,7 +51,7 @@ As the query will return 5648 result, we just return the first 10 records.
     ```sql
     SELECT song_id,
         title
-    FROM hdfs.`/pj_1/m0/output.avro`
+    FROM hdfs.`/pj/m0/output.avro`
     WHERE song_hotttnesss <> 'NaN'
     ORDER BY song_hotttnesss DESC,
         duration ASC,
@@ -80,14 +80,14 @@ As the query will return 5648 result, we just return the first 10 records.
     10 rows selected (0.471 seconds)
     ```
 
-## 3. Find the name of the album with the most tracks
+## 3. The name of the album with the most tracks
 
 - SQL
 
     ```sql
     SELECT release,
         COUNT(release) AS NumTrack
-    from hdfs.`/pj_1/m0/output.avro`
+    FROM hdfs.`/pj/m0/output.avro`
     GROUP BY release
     ORDER BY NumTrack desc
     LIMIT 1;
@@ -104,8 +104,6 @@ As the query will return 5648 result, we just return the first 10 records.
     1 row selected (0.695 seconds)
     ```
 
-
-
 ## 4. The name of the band who recorded the longest song
 
 - SQL
@@ -113,7 +111,7 @@ As the query will return 5648 result, we just return the first 10 records.
     ```sql
     SELECT artist_name,
         duration
-    from hdfs.`/pj_1/m0/output.avro`
+    FROM hdfs.`/pj/m0/output.avro`
     ORDER BY duration DESC
     LIMIT 1;
     ```
