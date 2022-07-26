@@ -186,7 +186,7 @@ Query [Million Song Dataset (MSD)](http://millionsongdataset.com) with `Drill`:
 
 ## 1. The range of dates covered by the songs
 
-- SQL
+- SQL:
 
   ```sql
   -- Age of the oldest songs
@@ -201,26 +201,24 @@ Query [Million Song Dataset (MSD)](http://millionsongdataset.com) with `Drill`:
 
 ## 1. The range of dates covered by the songs
 
-```log
-+--------+
-|  Age   |
-+--------+
-| 12     |
-+--------+
-1 row selected (8.864 seconds)
-+--------+
-|  Age   |
-+--------+
-| 96     |
-+--------+
-1 row selected (0.642 seconds)
-```
+- Results:
 
-Therefore, the oldest song's age is **96** and the youngest is **12**, so the range of dates covered by the songs is **84** years.
+  ```log
+  +--------+        +--------+
+  |  Age   |        |  Age   |
+  +--------+        +--------+
+  | 12     |        | 96     |
+  +--------+        +--------+
+  1 row selected    1 row selected
+  ```
+
+\ 
+
+The oldest song's age is **96** and the youngest is **12**. As a result, the range of dates covered by the songs is **84** years.
 
 ## 2. The hottest song that is the shortest and shows highest energy with lowest tempo
 
-- SQL
+- SQL:
 
     ```sql
     SELECT title
@@ -233,7 +231,7 @@ Therefore, the oldest song's age is **96** and the youngest is **12**, so the ra
     LIMIT 10;
     ```
 
-- Remark: This query returns **5648** results, but we only display the first **10** records.
+- Remarks: This query returns **5648** results, but we only display the first **10** records.
 
 ## 2. The hottest song that is the shortest and shows highest energy with lowest tempo
 
@@ -257,7 +255,7 @@ Therefore, the oldest song's age is **96** and the youngest is **12**, so the ra
 
 ## 3. The name of the album with the most tracks
 
-- SQL
+- SQL:
 
   ```sql
   SELECT release, COUNT(release) AS NumTrack
@@ -267,7 +265,7 @@ Therefore, the oldest song's age is **96** and the youngest is **12**, so the ra
   LIMIT 1;
   ```
 
-- Result
+- Results:
 
   ```log
   +------------------+----------+
@@ -280,7 +278,7 @@ Therefore, the oldest song's age is **96** and the youngest is **12**, so the ra
 
 ## 4. The name of the band who recorded the longest song
 
-- SQL
+- SQL:
 
   ```sql
   SELECT artist_name, duration
@@ -289,7 +287,7 @@ Therefore, the oldest song's age is **96** and the youngest is **12**, so the ra
   LIMIT 1;
   ```
 
-- Result
+- Results:
 
   ```log
   +-------------+-----------+
@@ -299,6 +297,5 @@ Therefore, the oldest song's age is **96** and the youngest is **12**, so the ra
   +-------------+-----------+
   1 row selected (0.27 seconds)
   ```
-
 
 # Milestone 2: Advanced Data Analysis
