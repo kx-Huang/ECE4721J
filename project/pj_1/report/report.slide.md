@@ -61,7 +61,7 @@ header-includes:
     }
 
     \setbeamertemplate{section in toc}{
-        \leftskip=.18\paperwidth
+        \leftskip=.17\paperwidth
         %\inserttocsectionnumber
         \bullet\kern1.25ex\inserttocsection\par
     }
@@ -73,6 +73,7 @@ header-includes:
 
     \setbeamertemplate{enumerate items}[default]
     \setbeamertemplate{itemize items}[circle]
+    \setbeamertemplate{bibliography item}[text]
 
     ```
 ---
@@ -87,101 +88,217 @@ header-includes:
 
 3. Convert `hdf5` to `Avro` with `Apache Avro`
 
-
-## 0. Environment
-
-- `Python`: 3.9.2
-
-- Install `PyGreSQL` env
-  ```bash
-  $ sudo apt-get install libpq-dev
-  ```
-
-- Install `python` packages
-  ```bash
-  $ python3 -m pip install -r requirements.txt
-  ```
-
-- Remark: some syntax are modified to accommodate `Python 3`, for example,
-  ```python
-  print hdf5_path
-  ```
-
 ## 1. Compact small `hdf5` files into larger one
 
-Creates an aggregate file from all song `hdf5` files in a given directory
-
-- Usage:
-  ```bash
-  $ python3 create_aggregate_file.py ←
-    → <H5 DIR> <OUTPUT.h5>
-  ```
+```bash
+$ python3 create_aggregate_file.py <IN> <OUT>
+```
 
 - Input: a directory contains `hdf5` song files
 
 - Output: an aggregate `hdf5` song file
 
-- Remark: Remove the existing file having the same name as the output file before running the `Python` script
-  ```bash
-  $ rm -f <OUTPUT.h5>
-  ```
+- Example:
+
+  ![Compact 10000 `hdf5` files into larger one](img/compact.jpeg)
 
 ## 2. Read `hdf5` files and extract the information
 
-Quickly display all we know about a single/aggregate/summary `hdf5` song file
+```bash
+$ python3 display_song.py [FLAGS] <HDF5> <idx> <field>
+```
 
-- Usage:
-  ```bash
-  $ python3 display_song.py [FLAGS] ←
-    → <HDF5 file> <OPT: song idx> <OPT: getter>
-  ```
-
-- Input: a `hdf5` song file
+- Input: an `hdf5` song file
 
 - Output: specified field content
 
-- Remark: `getter` arguments must correspond to getters in `hdf5_getters.py`. Please refer to this file:
-  ```bash
-  m0/schema/valid_field.log
-  ```
+- Example:
+
+  ![Get artist name of the second song in compacted `hdf5` file](img/extract.png)
 
 ## 3. Convert `hdf5` to `Avro` with `Apache Avro`
 
-Convert a single/aggregate song file from `hdf5` to `Avro`
+```bash
+$ hdf5_to_avro.py [-h] -s <SCHEMA> -i <HDF5> -o <AVRO>
+```
 
-- Usage:
-  ```bash
-  $ hdf5_to_avro.py [-h] -s <SCHEMA> -i <HDF5> -o <AVRO>
-  ```
+- Input:
 
-- Input: an `Avro` schema file, a `hdf5` song file to be converted
+  - an `Avro` schema file
+
+  - an `hdf5` song file to be converted
 
 - Output: an `Avro` song file
 
-- Remark: field names in schema file must correspond to getters in `hdf5_getters.py`. A sanity check will be performed before conversion. Please refer to this file:
-  ```bash
-  m0/schema/valid_field.log
-  ```
+## Sample schema file in `json` format:
 
-## 4. Run `hdf5` file pre-process pipeline
+```json
+  {
+    "namespace": "song.avro",
+    "type": "record",
+    "name": "Song",
+    "fields": [
+      {
+        "name": "artist_name",
+        "type": ["string", "null"]
+      },
+      {
+        "name": "title",
+        "type": ["string", "null"]
+      }
+    ]
+  }
+```
 
-- Usage:
-  ```bash
-  $ chmod +x m0.sh
-  $ ./m0.sh
-  ```
+##
+
+\ 
+
+![Convert compacted `hdf5` file to `Avro`](img/convert.jpeg){width=80%}
 
 ## Reference
 
 1. MSongsDB
+
    [`https://github.com/tbertinmahieux/MSongsDB`](https://github.com/tbertinmahieux/MSongsDB)
 
 2. MSongsDB Field List
+
    [`http://millionsongdataset.com/pages/field-list/`](http://millionsongdataset.com/pages/field-list/)
 
 3. Apache Avro Documentation
+
    [`https://avro.apache.org/docs/current/index.html`](https://avro.apache.org/docs/current/index.html)
 
 # Milestone 1: Drill Database Query
+
+## Goals
+
+Query [Million Song Dataset (MSD)](http://millionsongdataset.com) with `Drill`:
+
+1. Find the range of dates covered by the songs in the dataset
+
+2. Find the hottest song that is the shortest and shows highest energy with lowest tempo
+
+3. Find the name of the album with the most tracks
+
+4. Find the name of the band who recorded the longest song
+
+## 1. The range of dates covered by the songs
+
+- SQL
+
+  ```sql
+  -- Age of the oldest songs
+  SELECT 2022 - MAX(Year)
+  FROM hdfs.`/pj/m0/output.avro`;
+
+  -- Age of the youngest songs
+  SELECT 2022 - MIN(Year)
+  FROM hdfs.`/pj/m0/output.avro`
+  WHERE YEAR > 0;
+  ```
+
+## 1. The range of dates covered by the songs
+
+```log
++--------+
+|  Age   |
++--------+
+| 12     |
++--------+
+1 row selected (8.864 seconds)
++--------+
+|  Age   |
++--------+
+| 96     |
++--------+
+1 row selected (0.642 seconds)
+```
+
+Therefore, the oldest song's age is **96** and the youngest is **12**, so the range of dates covered by the songs is **84** years.
+
+## 2. The hottest song that is the shortest and shows highest energy with lowest tempo
+
+- SQL
+
+    ```sql
+    SELECT title
+    FROM hdfs.`/pj/m0/output.avro`
+    WHERE song_hotttnesss <> 'NaN'
+    ORDER BY song_hotttnesss DESC,
+        duration ASC,
+        energy DESC,
+        tempo ASC
+    LIMIT 10;
+    ```
+
+- Remark: This query returns **5648** results, but we only display the first **10** records.
+
+## 2. The hottest song that is the shortest and shows highest energy with lowest tempo
+
+```log
++------------------------------------------------------+
+|                        title                         |
++------------------------------------------------------+
+| b'Immigrant Song (Album Version)'                    |
+| b"Nothin' On You [feat. Bruno Mars] (Album Version)" |
+| b'This Christmas (LP Version)'                       |
+| b'If Today Was Your Last Day (Album Version)'        |
+| b'Harder To Breathe'                                 |
+| b'Blue Orchid'                                       |
+| b'Just Say Yes'                                      |
+| b'They Reminisce Over You (Single Version)'          |
+| b'Exogenesis: Symphony Part 1 [Overture]'            |
+| b'Inertiatic Esp'                                    |
++------------------------------------------------------+
+10 rows selected (0.471 seconds)
+```
+
+## 3. The name of the album with the most tracks
+
+- SQL
+
+  ```sql
+  SELECT release, COUNT(release) AS NumTrack
+  FROM hdfs.`/pj/m0/output.avro`
+  GROUP BY release
+  ORDER BY NumTrack desc
+  LIMIT 1;
+  ```
+
+- Result
+
+  ```log
+  +------------------+----------+
+  |     release      | NumTrack |
+  +------------------+----------+
+  | b'Greatest Hits' | 21       |
+  +------------------+----------+
+  1 row selected (0.695 seconds)
+  ```
+
+## 4. The name of the band who recorded the longest song
+
+- SQL
+
+  ```sql
+  SELECT artist_name, duration
+  FROM hdfs.`/pj/m0/output.avro`
+  ORDER BY duration DESC
+  LIMIT 1;
+  ```
+
+- Result
+
+  ```log
+  +-------------+-----------+
+  | artist_name | duration  |
+  +-------------+-----------+
+  | b'UFO'      | 1819.7677 |
+  +-------------+-----------+
+  1 row selected (0.27 seconds)
+  ```
+
 
 # Milestone 2: Advanced Data Analysis
