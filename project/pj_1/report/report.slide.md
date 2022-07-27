@@ -345,8 +345,8 @@ Let's say we want to find artists similar to **A** with distance **3**, and we h
 ![Initialize Graph File](img/graph.png)
 ::::
 
-:::: {.column width=35% align=c}
-
+:::: {.column width=40% align=c}
+::: info
 ```
 A | 0   | B,C
 B | inf | A
@@ -356,6 +356,7 @@ E | inf | C,D,F
 F | inf | E
 G | inf | D
 ```
+:::
 ::::
 
 :::
@@ -363,33 +364,34 @@ G | inf | D
 
 ## Step 2: Generate Distance Pair in Mapper
 
-**Format**: each line contains **Neighbours, Node, Distance+1**
+**Output**: each line contains **Neighbours, Node, Distance+1**
 
 \br
 
 ::: {.columns align=center}
-:::: {.column width=0.2%}
-::::
-:::: {.column width=25%}
+:::: {.column width=30%}
+::: info
 ```
-A | 0   | B,C
+A|0  |B,C
 
-B | inf | A
-C | inf | A,E
+B|inf|A
+C|inf|A,E
 
-D | inf | E,G
+D|inf|E,G
 
-E | inf | C,D,F
+E|inf|C,D,F
 
 
-F | inf | E
-G | inf | D
+F|inf|E
+G|inf|D
 ```
+:::
 ::::
-:::: {.column width=15%}
+:::: {.column width=10%}
 $$\xrightarrow[]{\textbf{Mapper}}$$
 ::::
-:::: {.column width=16%}
+:::: {.column width=25%}
+::: info
 ```
 B, A, 1
 C, A, 1
@@ -404,11 +406,13 @@ F, E, inf
 E, F, inf
 D, G, inf
 ```
+:::
 ::::
-:::: {.column width=11%}
+:::: {.column width=6%}
 $$\xrightarrow[]{\textbf{Sort}}$$
 ::::
-:::: {.column width=20%}
+:::: {.column width=25%}
+::: info
 ```
 A, B, inf
 A, C, inf
@@ -423,5 +427,6 @@ E, F, inf
 F, E, inf
 G, D, inf
 ```
+:::
 ::::
 :::
