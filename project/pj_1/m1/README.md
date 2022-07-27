@@ -13,13 +13,13 @@ Query [Million Song Dataset (MSD)](http://millionsongdataset.com) with `Drill`:
 
     ```sql
     -- Age of the oldest songs
-    SELECT 2022 - MAX(Year)
+    SELECT 2022 - MAX(year) AS Age
     FROM hdfs.`/pj/m0/output.avro`;
 
     -- Age of the youngest songs
-    SELECT 2022 - MIN(Year)
+    SELECT 2022 - MIN(year) AS Age
     FROM hdfs.`/pj/m0/output.avro`
-    WHERE YEAR > 0;
+    WHERE year > 0;
     ```
 
 - Result
