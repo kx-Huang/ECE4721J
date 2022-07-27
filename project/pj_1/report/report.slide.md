@@ -75,7 +75,21 @@ header-includes:
     \setbeamertemplate{itemize items}[circle]
     \setbeamertemplate{bibliography item}[text]
 
+    \newcommand{\br}{\ \\}
+
+    \usepackage{lastpage}
+    \usepackage{tcolorbox}
+    \newtcolorbox{info-box}{colback=cyan!5!white,arc=3pt,outer arc=4pt,colframe=cyan!60!black}
+    \newtcolorbox{warning-box}{colback=orange!5!white,arc=3pt,outer arc=4pt,colframe=orange!80!black}
+    \newtcolorbox{error-box}{colback=red!5!white,arc=3pt,outer arc=4pt,colframe=red!75!black}
+    \newtcolorbox{blank-box}{opacityback=0,sharp corners,opacityframe=0}
     ```
+pandoc-latex-environment:
+  tcolorbox: [box]
+  info-box: [info]
+  warning-box: [warning]
+  error-box: [error]
+  blank-box: [blank]
 ---
 
 # Milestone 0: HDF5 Data Pre-process
@@ -152,7 +166,7 @@ $ hdf5_to_avro.py [-h] -s <SCHEMA> -i <HDF5> -o <AVRO>
 
 ##
 
-\ 
+\br
 
 ![Convert compacted `hdf5` file to `Avro`](img/convert.jpeg){width=80%}
 
@@ -190,13 +204,13 @@ Query [Million Song Dataset (MSD)](http://millionsongdataset.com) with `Drill`:
 
   ```sql
   -- Age of the oldest songs
-  SELECT 2022 - MAX(Year)
+  SELECT 2022 - MAX(year) AS Age
   FROM hdfs.`/pj/m0/output.avro`;
 
   -- Age of the youngest songs
-  SELECT 2022 - MIN(Year)
+  SELECT 2022 - MIN(year) AS Age
   FROM hdfs.`/pj/m0/output.avro`
-  WHERE YEAR > 0;
+  WHERE year > 0;
   ```
 
 ## 1. The range of dates covered by the songs
@@ -212,7 +226,7 @@ Query [Million Song Dataset (MSD)](http://millionsongdataset.com) with `Drill`:
   1 row selected    1 row selected
   ```
 
-\ 
+\br
 
 The oldest song's age is **96** and the youngest is **12**. As a result, the range of dates covered by the songs is **84** years.
 
@@ -299,3 +313,115 @@ The oldest song's age is **96** and the youngest is **12**. As a result, the ran
   ```
 
 # Milestone 2: Advanced Data Analysis
+
+## Goals
+
+1. Determine distance between artists with adjacency matrix, using parallelized BFS
+
+2. Propose similar songs with distance and "provide more diverse recommendations"
+
+3. Do it in both MapReduce and Spark to compare the time
+
+4. Prepare a set of slides with Beamer and a poster with Beamerposter for presentations
+
+## BFS with MapReduce
+
+Runs BFS on the [MillionSongDataset](http://millionsongdataset.com/) to search for similar artists to a certain artist within distance 3 with MapReduce:
+
+## BFS with MapReduce - A Simple Example
+
+Let's say we want to find artists similar to **A** with distance **3**, and we have following relationships (each edge has distance **1**):
+
+![Similarity Graph](img/graph.png){width=65%}
+
+## Step 1: Initialize Graph File with Target Artist
+
+**Format**: each line contains **Node | Distance | Neighbours**
+
+::: blank
+::: columns
+
+:::: {.column width=60% align=c}
+![Initialize Graph File](img/graph.png)
+::::
+
+:::: {.column width=35% align=c}
+
+```
+A | 0   | B,C
+B | inf | A
+C | inf | A,E
+D | inf | E,G
+E | inf | C,D,F
+F | inf | E
+G | inf | D
+```
+::::
+
+:::
+:::
+
+## Step 2: Generate Distance Pair in Mapper
+
+**Format**: each line contains **Neighbours, Node, Distance+1**
+
+\br
+
+::: {.columns align=center}
+:::: {.column width=0.2%}
+::::
+:::: {.column width=25%}
+```
+A | 0   | B,C
+
+B | inf | A
+C | inf | A,E
+
+D | inf | E,G
+
+E | inf | C,D,F
+
+
+F | inf | E
+G | inf | D
+```
+::::
+:::: {.column width=15%}
+$$\xrightarrow[]{\textbf{Mapper}}$$
+::::
+:::: {.column width=16%}
+```
+B, A, 1
+C, A, 1
+A, B, inf
+A, C, inf
+E, C, inf
+E, D, inf
+G, D, inf
+C, E, inf
+D, E, inf
+F, E, inf
+E, F, inf
+D, G, inf
+```
+::::
+:::: {.column width=11%}
+$$\xrightarrow[]{\textbf{Sort}}$$
+::::
+:::: {.column width=20%}
+```
+A, B, inf
+A, C, inf
+B, A, 1
+C, A, 1
+C, E, inf
+D, E, inf
+D, G, inf
+E, C, inf
+E, D, inf
+E, F, inf
+F, E, inf
+G, D, inf
+```
+::::
+:::
