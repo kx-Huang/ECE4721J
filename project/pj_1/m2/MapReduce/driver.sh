@@ -30,7 +30,7 @@ hdfs dfs -put -f input-$target $1/output0/part-00000
 for i in {0..2}
 do
     echo Starting iteration number $i
-    hadoop jar /home/s/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar  -file mapper.py -file reducer.py    -mapper mapper.py  -reducer reducer.py -input $1/output$i/part-00000 -output $1/output$((i + 1)) 
+    hadoop jar /home/s/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar  -file mapper.py -file reducer.py    -mapper mapper.py  -reducer reducer.py -input $1/output$i/part-00000 -output $1/output$((i + 1))
 done
 
 # - Getting output
