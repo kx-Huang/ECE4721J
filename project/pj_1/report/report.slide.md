@@ -79,7 +79,7 @@ header-includes:
 
     \usepackage{lastpage}
     \usepackage{tcolorbox}
-    \newtcolorbox{info-box}{colback=cyan!5!white,arc=3pt,outer arc=4pt,colframe=cyan!60!black}
+    \newtcolorbox{info-box}{colback=cyan!5!white,arc=3pt,outer arc=4pt,colframe=cyan!60!black,left=5pt,right=5pt,top=5pt,bottom=5pt,enlarge top by=6pt}
     \newtcolorbox{warning-box}{colback=orange!5!white,arc=3pt,outer arc=4pt,colframe=orange!80!black}
     \newtcolorbox{error-box}{colback=red!5!white,arc=3pt,outer arc=4pt,colframe=red!75!black}
     \newtcolorbox{blank-box}{opacityback=0,sharp corners,opacityframe=0}
@@ -169,20 +169,6 @@ $ hdf5_to_avro.py [-h] -s <SCHEMA> -i <HDF5> -o <AVRO>
 \br
 
 ![Convert compacted `hdf5` file to `Avro`](img/convert.jpeg){width=80%}
-
-## Reference
-
-1. MSongsDB
-
-   [`https://github.com/tbertinmahieux/MSongsDB`](https://github.com/tbertinmahieux/MSongsDB)
-
-2. MSongsDB Field List
-
-   [`http://millionsongdataset.com/pages/field-list/`](http://millionsongdataset.com/pages/field-list/)
-
-3. Apache Avro Documentation
-
-   [`https://avro.apache.org/docs/current/index.html`](https://avro.apache.org/docs/current/index.html)
 
 # Milestone 1: Drill Database Query
 
@@ -324,10 +310,6 @@ The oldest song's age is **96** and the youngest is **12**. As a result, the ran
 
 4. Prepare a set of slides with Beamer and a poster with Beamerposter for presentations
 
-## BFS with MapReduce
-
-Runs BFS on the [MillionSongDataset](http://millionsongdataset.com/) to search for similar artists to a certain artist within distance 3 with MapReduce:
-
 ## BFS with MapReduce - A Simple Example
 
 Let's say we want to find artists similar to **A** with distance **3**, and we have following relationships (each edge has distance **1**):
@@ -339,22 +321,20 @@ Let's say we want to find artists similar to **A** with distance **3**, and we h
 **Format**: each line contains **Node | Distance | Neighbours**
 
 ::: blank
-::: columns
+::: {.columns align=center}
 
-:::: {.column width=60% align=c}
+:::: {.column width=50% align=c}
 ![Initialize Graph File](img/graph.png)
 ::::
 
-:::: {.column width=40% align=c}
+:::: {.column width=37% align=c}
 ::: info
 ```
-A | 0   | B,C
-B | inf | A
-C | inf | A,E
-D | inf | E,G
-E | inf | C,D,F
-F | inf | E
-G | inf | D
+A | 0 | A,B,C
+B | ∞ | A,B
+C | ∞ | A,C,D,E
+D | ∞ | C,D
+E | ∞ | C,E
 ```
 :::
 ::::
@@ -362,71 +342,266 @@ G | inf | D
 :::
 :::
 
-## Step 2: Generate Distance Pair in Mapper
+## Step 2: Generate Distance Pairs in Mapper
 
-**Output**: each line contains **Neighbours, Node, Distance+1**
-
-\br
+**Mapper**: Generate **Neighbours, Node, Distance+1** if not itself
 
 ::: {.columns align=center}
-:::: {.column width=30%}
+:::: {.column width=0.1%}
+::::
+:::: {.column width=26%}
 ::: info
 ```
-A|0  |B,C
-
-B|inf|A
-C|inf|A,E
-
-D|inf|E,G
-
-E|inf|C,D,F
+A|0|A,B,C
 
 
-F|inf|E
-G|inf|D
+B|∞|A,B
+
+C|∞|A,C,D,E
+
+
+
+D|∞|C,D
+
+E|∞|C,E
+ 
 ```
 :::
 ::::
-:::: {.column width=10%}
-$$\xrightarrow[]{\textbf{Mapper}}$$
+:::: {.column width=6%}
+$$\xrightarrow[]{\textbf{Map}}$$
 ::::
-:::: {.column width=25%}
+:::: {.column width=19%}
 ::: info
 ```
+A, A, 0
 B, A, 1
 C, A, 1
-A, B, inf
-A, C, inf
-E, C, inf
-E, D, inf
-G, D, inf
-C, E, inf
-D, E, inf
-F, E, inf
-E, F, inf
-D, G, inf
+A, B, ∞
+B, B, ∞
+A, C, ∞
+C, C, ∞
+D, C, ∞
+E, C, ∞
+C, D, ∞
+D, D, ∞
+C, E, ∞
+E, E, ∞
 ```
 :::
 ::::
 :::: {.column width=6%}
 $$\xrightarrow[]{\textbf{Sort}}$$
 ::::
-:::: {.column width=25%}
+:::: {.column width=19%}
 ::: info
 ```
-A, B, inf
-A, C, inf
+A, A, 0
+A, B, ∞
+A, C, ∞
 B, A, 1
+B, B, ∞
 C, A, 1
-C, E, inf
-D, E, inf
-D, G, inf
-E, C, inf
-E, D, inf
-E, F, inf
-F, E, inf
-G, D, inf
+C, C, ∞
+C, D, ∞
+C, E, ∞
+D, C, ∞
+D, D, ∞
+E, C, ∞
+E, E, ∞
 ```
 :::
 ::::
+:::: {.column width=0.1%}
+::::
 :::
+
+## Step 3: Merge Distance Pairs in Reducer
+
+**Reducer**: Merge the same **Neighbour**, keep distance **minimum**
+
+::: {.columns align=center}
+:::: {.column width=1%}
+::::
+:::: {.column width=19%}
+::: info
+```
+A, A, 0
+A, B, ∞
+A, C, ∞
+B, A, 1
+B, B, ∞
+C, A, 1
+C, C, ∞
+C, D, ∞
+C, E, ∞
+D, C, ∞
+D, D, ∞
+E, C, ∞
+E, E, ∞
+```
+:::
+::::
+:::: {.column width=10%}
+$$\xrightarrow[]{\textbf{Reduce}}$$
+::::
+:::: {.column width=26%}
+::: info
+```
+A|0|A,B,C
+
+
+B|1|A,B
+
+C|1|A,C,D,E
+
+
+
+D|∞|C,D
+
+E|∞|C,E
+ 
+```
+:::
+::::
+:::: {.column width=35%}
+![Graph after 1 MapReduce Iteration](img/graph-1.png){width=90%}
+::::
+:::
+
+## Iteraiton 2: Mapper
+
+::: {.columns align=center}
+:::: {.column width=0.1%}
+::::
+:::: {.column width=26%}
+::: info
+```
+A|0|A,B,C
+
+
+B|1|A,B
+
+C|1|A,C,D,E
+
+
+
+D|∞|C,D
+
+E|∞|C,E
+ 
+```
+:::
+::::
+:::: {.column width=6%}
+$$\xrightarrow[]{\textbf{Map}}$$
+::::
+:::: {.column width=19%}
+::: info
+```
+A, A, 0
+B, A, 1
+C, A, 1
+A, B, 2
+B, B, 1
+A, C, 2
+C, C, 1
+D, C, 2
+E, C, 2
+C, D, ∞
+D, D, ∞
+C, E, ∞
+E, E, ∞
+```
+:::
+::::
+:::: {.column width=6%}
+$$\xrightarrow[]{\textbf{Sort}}$$
+::::
+:::: {.column width=19%}
+::: info
+```
+A, A, 0
+A, C, 2
+A, B, 2
+B, A, 1
+B, B, 1
+C, A, 1
+C, C, 1
+C, D, ∞
+C, E, ∞
+D, C, 2
+D, D, ∞
+E, C, 2
+E, E, ∞
+```
+:::
+::::
+:::: {.column width=0.1%}
+::::
+:::
+
+## Iteration 2: Reducer
+
+::: {.columns align=center}
+:::: {.column width=1%}
+::::
+:::: {.column width=19%}
+::: info
+```
+A, A, 0
+A, C, 2
+A, B, 2
+B, A, 1
+B, B, 1
+C, A, 1
+C, C, 1
+C, D, ∞
+C, E, ∞
+D, C, 2
+D, D, ∞
+E, C, 2
+E, E, ∞
+```
+:::
+::::
+:::: {.column width=10%}
+$$\xrightarrow[]{\textbf{Reduce}}$$
+::::
+:::: {.column width=26%}
+::: info
+```
+A|0|A,B,C
+
+
+B|1|A,B
+
+C|1|A,C,D,E
+
+
+
+D|2|C,D
+
+E|2|C,E
+ 
+```
+:::
+::::
+:::: {.column width=35%}
+![Graph after 2 MapReduce Iterations](img/graph-2.png){width=90%}
+::::
+:::
+
+## Reference
+
+1. Million Song Dataset
+
+   [`http://millionsongdataset.com`](http://millionsongdataset.com)
+
+2. Apache Avro Documentation
+
+   [`https://avro.apache.org/docs/current/index.html`](https://avro.apache.org/docs/current/index.html)
+
+3. Apache Spark Documentation
+
+   [`https://spark.apache.org/docs/latest/`](https://spark.apache.org/docs/latest/)
