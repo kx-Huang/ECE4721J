@@ -1,6 +1,6 @@
 # ECE4721J: Project 1
 
-Big data analysis on [Million Song Dataset (MSD)](http://millionsongdataset.com). You can check the slide in `report/` folder for quick overview.
+Big data analysis on [Million Song Dataset (MSD)](http://millionsongdataset.com).
 
 Goals:
 - Work with Hadoop, Drill and Spark
@@ -33,3 +33,8 @@ Team members:
 2. Propose similar songs with distance and "provide more diverse recommendations"
 3. Implement the above algorithm in both Mapreduce and Spark
 4. Compare the performance of Mapreduce and Spark
+
+## Remarks
+
+- For quick overview, please check the slide in `report/` folder
+- For cluster setup, please check `manual.md`
