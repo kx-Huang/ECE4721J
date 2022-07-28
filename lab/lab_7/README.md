@@ -2,7 +2,7 @@
 
 ## Goal
 
-- Work with a real dataset.
+- Work with a real dataset
 - Practice with PCA and Gradient Descent using Spark
 - Get familiar with Spark Dataframe and MLLib APIs
 
