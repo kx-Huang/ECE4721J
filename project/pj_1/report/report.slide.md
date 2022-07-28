@@ -92,6 +92,14 @@ pandoc-latex-environment:
   blank-box: [blank]
 ---
 
+## Workflow
+
+![](img/workflow.png){width=100%}
+
+## Milestone
+
+![](img/milestone.png){width=100%}
+
 # Milestone 0: HDF5 Data Pre-process
 
 ## Goals
@@ -306,9 +314,9 @@ The oldest song's age is **96** and the youngest is **12**. As a result, the ran
 
 2. Propose similar songs with distance and "provide more diverse recommendations"
 
-3. Do it in both MapReduce and Spark to compare the time
+3. Implement the above algorithm in both Mapreduce and Spark
 
-4. Prepare a set of slides with Beamer and a poster with Beamerposter for presentations
+4. Compare the performance of Mapreduce and Spark
 
 ## BFS with MapReduce - A Simple Example
 
@@ -591,6 +599,12 @@ E|2|C,E
 ![Graph after 2 MapReduce Iterations](img/graph-2.png){width=90%}
 ::::
 :::
+
+## Benchmark
+
+- Data size: around **200GB**
+
+- MapReduce: around **250s**
 
 ## Reference
 
