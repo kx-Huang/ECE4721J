@@ -96,7 +96,7 @@ pandoc-latex-environment:
 
 ![](img/workflow.png){width=100%}
 
-## Milestone
+## Milestones
 
 ![](img/milestone.png){width=100%}
 
