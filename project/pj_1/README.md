@@ -1,6 +1,6 @@
 # ECE4721J: Project 1
 
-Big data analysis on [Million Song Dataset (MSD)](http://millionsongdataset.com)
+Big data analysis on [Million Song Dataset (MSD)](http://millionsongdataset.com). You can check the slide in `report/` folder for quick overview.
 
 Goals:
 - Work with Hadoop, Drill and Spark
@@ -31,5 +31,5 @@ Team members:
 
 1. Determine distance between artists with adjacency matrix, using parallelized BFS
 2. Propose similar songs with distance and "provide more diverse recommendations"
-3. Do it in both MapReduce and Spark to compare the time
-4. Prepare a set of slides with Beamer and a poster with Beamerposter for presentations
+3. Implement the above algorithm in both Mapreduce and Spark
+4. Compare the performance of Mapreduce and Spark
