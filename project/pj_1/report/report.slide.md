@@ -604,7 +604,9 @@ E|2|C,E
 
 - Data size: around **200GB**
 
-- MapReduce: around **250s**
+  - MapReduce: around **250s**
+
+  - Spark: around **45s**
 
 ## Reference
 
@@ -619,3 +621,7 @@ E|2|C,E
 3. Apache Spark Documentation
 
    [`https://spark.apache.org/docs/latest/`](https://spark.apache.org/docs/latest/)
+
+## Thanks for your attention!
+
+![Never Gonna Give You Up (by Rick Astley)](img/thank-you.png){width=75%}
