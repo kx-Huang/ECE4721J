@@ -1,6 +1,6 @@
 ---
 title: Big Data Analysis on [Million Song Dataset (MSD)](http://millionsongdataset.com)
-subtitle: "ECE4710: Methods and Tools for Big Data"
+subtitle: "ECE4721J: Methods and Tools for Big Data"
 author:
 - Yiding Chang
 - Yifan Shen
@@ -600,13 +600,40 @@ E|2|C,E
 ::::
 :::
 
+## BFS with Spark
+
+- Same algorithm as is proposed before
+
+- Implemented using Python with `PySpark`
+
+- For the implementation, we:
+
+    1. Convert data into RDD map
+
+    2. Using Spark `sortByKey()` to sort RDD aggregated by node index and then combining the neighbours
+
+    3. Using Spark `reduce()` to pick the minimum distance of different neighbours towards the central node
+
+- Spark is assumed to be faster since subsequent steps are retained in memory with a trade-off of much more memory consumption
+
 ## Benchmark
 
 - Data size: around **200GB**
 
-  - MapReduce: around **250s**
+- Server: SJTU cluster with three machines
+  - CPU: Dualcore Intel Xeon Processor (Skylake, IBRS)
+  - Memory: 4GB
 
-  - Spark: around **45s**
+\br
+
+::: {.columns align=center}
+:::: {.column width=50%}
+![MapReduce: around **250s**](img/time-mapreduce.png){width=85%}
+::::
+:::: {.column width=50%}
+![Spark: around **45s**](img/time-spark.png){width=85%}
+::::
+:::
 
 ## Reference
 
