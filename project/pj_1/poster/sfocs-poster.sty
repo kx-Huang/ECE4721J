@@ -1,0 +1,167 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{sfocs-poster}[2021/07/23 beamer poster style]
+
+% textpos must be loaded before beamerposter 
+\RequirePackage[absolute,overlay]{textpos}
+
+% package options 
+\RequirePackage{xkeyval}
+
+% portrait mode
+\define@boolkey{sfocs-poster.sty}[sfocsposter@]{portrait}[true]{}
+
+\ProcessOptionsX
+
+\ifsfocsposter@portrait
+	\PassOptionsToPackage{orientation=portrait}{beamerposter}
+\fi
+
+\usepackage[size=a1,scale=1]{beamerposter}
+
+% compiler 
+\RequirePackage{ifxetex,ifluatex}
+\newif\ifxetexorluatex
+\ifxetex
+  \xetexorluatextrue
+\else
+  \ifluatex
+    \xetexorluatextrue
+  \else
+    \xetexorluatexfalse
+  \fi
+\fi
+
+\RequirePackage[USenglish]{babel}
+
+% sans math 
+\RequirePackage{cmbright}
+\RequirePackage[cm]{sfmath}
+
+% beamer fonts
+\usefonttheme{professionalfonts}
+
+\ifxetexorluatex 
+	\RequirePackage{fontspec}
+	\setmainfont{CMU Sans Serif}
+	\setsansfont{CMU Sans Serif}
+	\setmonofont[Scale=.9]{CMU Typewriter Text}
+	\ifxetex
+		\RequirePackage{xeCJK}
+		\setCJKsansfont{AR PL UKai TW MBE:style=Book}
+	\else
+		\RequirePackage{luatexja-fontspec}
+		\setsansjfont{AR PL UKai TW MBE:style=Book}
+	\fi
+\fi
+
+% colors
+\RequirePackage{xcolor}
+
+\definecolor{global}{HTML}{5BC346}
+\definecolor{tech}{HTML}{FAAA33}
+\definecolor{com}{HTML}{B665CD}
+\definecolor{game}{HTML}{3397C1}
+
+\RequirePackage{graphicx}
+\graphicspath{{../assets/}}
+
+% tables and figures 
+\RequirePackage{booktabs,multicol} % proper tables 
+\RequirePackage{wrapfig,subfig} % figures wrapped inside text 
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc}
+
+\RequirePackage{ragged2e} %justifying
+\RequirePackage{setspace}
+\setlength\parindent{0pt}
+\setlength\parskip{.125cm}
+
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,raster}
+
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{structure}{fg=black!65}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{navigation symbols}{}
+
+\def\conf{\setbeamertemplate{conf}}
+\def\insertconf{\usebeamertemplate*{conf}}
+\setbeamercolor{conf}{fg=black!5}
+
+\def\mail{\setbeamertemplate{mail}}
+\def\insertmail{\usebeamertemplate*{mail}}
+\setbeamercolor{mail}{fg=black!5}
+
+\useinnertheme{circles}
+
+% beamer item with wider space
+\RequirePackage{xpatch}
+
+\xpatchcmd{\itemize}{\def\makelabel}{
+        \ifnum\@itemdepth=1\relax
+                \setlength\itemsep{.25cm}% separation for first level
+                \setlength\topsep{.125cm}% separation for first level
+        \else
+                \ifnum\@itemdepth=2\relax
+                        \setlength\itemsep{.125cm}% separation for second level
+                        \setlength\topsep{.125cm}% separation for first level
+                \else
+                        \ifnum\@itemdepth=3\relax
+                                \setlength\itemsep{0.5ex}% separation for third level
+                        \fi
+                \fi
+        \fi
+        \def\makelabel
+}{}{}
+
+% justify items
+\xpatchcmd{\itemize}{\raggedright}{\justifying}{}{}
+\xpatchcmd{\beamer@enum@}{\raggedright}{\justifying}{}{}
+
+% enumerate based on list + without \newcommand (beamer/beamerbaselocalstructure.sty)
+\def\@llisti{\leftmargin\leftmargini
+        \topsep 3\p@ \@plus2\p@ \@minus2.5\p@
+        \parsep 0\p@
+        \itemsep.25cm \@plus2\p@ \@minus3\p@
+}
+\def\@llistii{\leftmargin\leftmarginii
+        \topsep 3\p@ \@plus2\p@ \@minus2.5\p@
+        \parsep 0\p@
+        \itemsep.125cm \@plus1\p@ \@minus2\p@
+}
+\let\@listI\@llisti
+\let\@listii\@llistii
+
+% 1cm of space all around + handle position in percent
+\TPGrid[1cm,1cm]{100}{100}
+
+% logos
+\newcommand{\logos}[1][dark]{
+		\includegraphics[height=4cm]{JI-#1.pdf}
+		% \qquad
+		% \includegraphics[height=4cm]{SF-head.pdf}
+}
+
+% authors 
+\newcommand{\authori}[2][]{#2. {\em #1}\par}
+\newcommand{\authorii}[2][]{#2. {\em #1}\par}
+\newcommand{\authoriii}[2][]{#2. {#1}\par}
+\newcommand{\authoriv}[2][]{#2. {\em #1}\par}
+
+% sample boxes
+
+% default boxe style
+\tcbset{
+	framedbox/.style={
+		enhanced, fontupper=\LARGE,left=.75cm,right=.75cm,fonttitle=\huge,toptitle=.25cm,bottomtitle=.25cm,halign title=center
+	},
+}
+
+% most simple box 
+\newtcolorbox{basebox}[1][]{framedbox,#1}
+
+% a borderless box 
+\newtcolorbox{blankbox}[1][]{blanker,fontupper=\LARGE,#1}
+
+\endinput
