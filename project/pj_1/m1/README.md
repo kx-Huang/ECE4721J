@@ -30,7 +30,7 @@ Query [Million Song Dataset (MSD)](http://millionsongdataset.com) with `Drill`:
     +--------+
     | 12     |
     +--------+
-    1 row selected (8.864 seconds)
+    1 row selected (0.864 seconds)
 
     +--------+
     |  Age   |
